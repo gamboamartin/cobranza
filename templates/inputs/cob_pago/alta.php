@@ -1,4 +1,4 @@
-<?php /** @var  \gamboamartin\banco\controllers\controlador_adm_session $controlador  controlador en ejecucion */ ?>
+<?php /** @var  \gamboamartin\cobranza\controllers\controlador_adm_session $controlador  controlador en ejecucion */ ?>
 <?php use config\views; ?>
 
 <?php echo $controlador->inputs->codigo; ?>

@@ -1,7 +1,7 @@
 <?php
 namespace html;
 
-use gamboamartin\banco\controllers\controlador_bn_cuenta;
+use gamboamartin\cobranza\controllers\controlador_cob_deuda;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use models\cob_deuda;
@@ -10,13 +10,13 @@ use stdClass;
 
 class cob_deuda_html extends html_controler {
 
-    private function asigna_inputs(controlador_bn_cuenta $controler, stdClass $inputs): array|stdClass
+    private function asigna_inputs(controlador_cob_deuda $controler, stdClass $inputs): array|stdClass
     {
         $controler->inputs->select = new stdClass();
         return $controler->inputs;
     }
 
-    public function genera_inputs_alta(controlador_bn_cuenta $controler, PDO $link): array|stdClass
+    public function genera_inputs_alta(controlador_cob_deuda $controler, PDO $link): array|stdClass
     {
         $inputs = $this->init_alta(keys_selects: array(), link: $link);
         if(errores::$error){
@@ -31,7 +31,7 @@ class cob_deuda_html extends html_controler {
         return $inputs_asignados;
     }
 
-    private function genera_inputs_modifica(controlador_bn_cuenta $controler,PDO $link,
+    private function genera_inputs_modifica(controlador_cob_deuda $controler,PDO $link,
                                             stdClass $params = new stdClass()): array|stdClass
     {
         $inputs = $this->init_modifica(link: $link, row_upd: $controler->row_upd, params: $params);
@@ -84,8 +84,8 @@ class cob_deuda_html extends html_controler {
         return $alta_inputs;
     }
 
-    public function inputs_bn_cuenta(controlador_bn_cuenta $controlador,
-                                     stdClass $params = new stdClass()): array|stdClass
+    public function inputs_cob_deuda(controlador_cob_deuda $controlador,
+                                    stdClass $params = new stdClass()): array|stdClass
     {
         $inputs = $this->genera_inputs_modifica(controler: $controlador,
             link: $controlador->link, params: $params);
@@ -107,12 +107,12 @@ class cob_deuda_html extends html_controler {
         return $selects;
     }
 
-    public function select_bn_cuenta_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
+    public function select_cob_deuda_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
     {
-        $modelo = new bn_cuenta(link: $link);
+        $modelo = new cob_deuda(link: $link);
 
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo,label: 'Cuenta',required: true);
+            modelo: $modelo,label: 'Deuda',required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }

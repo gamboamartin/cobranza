@@ -3,7 +3,7 @@ namespace gamboamartin\banco\models;
 use base\orm\_modelo_parent;
 use PDO;
 
-class cob_tipo_cliente extends _modelo_parent {
+class cob_concepto extends _modelo_parent {
 
     public function __construct(PDO $link){
         $tabla = 'cob_tipo_cliente';

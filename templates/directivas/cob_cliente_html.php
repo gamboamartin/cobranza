@@ -8,7 +8,7 @@ use gamboamartin\system\html_controler;
 use PDO;
 use stdClass;
 
-class cob_tipo_cliente_html extends html_controler {
+class cob_cliente_html extends html_controler {
 
     private function asigna_inputs(controlador_cob_tipo_cliente $controler, stdClass $inputs): array|stdClass
     {
