@@ -1,22 +1,22 @@
 <?php
 namespace html;
 
-use gamboamartin\banco\controllers\controlador_bn_tipo_cuenta;
-use gamboamartin\banco\models\bn_tipo_cuenta;
+use gamboamartin\banco\controllers\controlador_cob_tipo_cliente;
+use gamboamartin\banco\models\cob_tipo_cliente;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use PDO;
 use stdClass;
 
-class bn_tipo_cuenta_html extends html_controler {
+class cob_tipo_cliente_html extends html_controler {
 
-    private function asigna_inputs(controlador_bn_tipo_cuenta $controler, stdClass $inputs): array|stdClass
+    private function asigna_inputs(controlador_cob_tipo_cliente $controler, stdClass $inputs): array|stdClass
     {
         $controler->inputs->select = new stdClass();
         return $controler->inputs;
     }
 
-    public function genera_inputs_alta(controlador_bn_tipo_cuenta $controler, array $keys_selects,PDO $link): array|stdClass
+    public function genera_inputs_alta(controlador_cob_tipo_cliente $controler, array $keys_selects,PDO $link): array|stdClass
     {
         $inputs = $this->init_alta(keys_selects:$keys_selects, link: $link);
         if(errores::$error){
@@ -31,7 +31,7 @@ class bn_tipo_cuenta_html extends html_controler {
         return $inputs_asignados;
     }
 
-    private function genera_inputs_modifica(controlador_bn_tipo_cuenta $controler,PDO $link,
+    private function genera_inputs_modifica(controlador_cob_tipo_cliente $controler,PDO $link,
                                             stdClass $params = new stdClass()): array|stdClass
     {
         $inputs = $this->init_modifica(link: $link, row_upd: $controler->row_upd, params: $params);
@@ -84,8 +84,8 @@ class bn_tipo_cuenta_html extends html_controler {
         return $alta_inputs;
     }
 
-    public function inputs_bn_tipo_cuenta(controlador_bn_tipo_cuenta $controlador,
-                                          stdClass $params = new stdClass()): array|stdClass
+    public function inputs_cob_tipo_cliente(controlador_cob_tipo_cliente $controlador,
+                                       stdClass $params = new stdClass()): array|stdClass
     {
         $inputs = $this->genera_inputs_modifica(controler: $controlador,
             link: $controlador->link, params: $params);
@@ -107,13 +107,13 @@ class bn_tipo_cuenta_html extends html_controler {
         return $selects;
     }
 
-    public function select_bn_tipo_cuenta_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
-                                             bool $disabled = false): array|string
+    public function select_cob_tipo_cliente_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
+                                               bool $disabled = false): array|string
     {
-        $modelo = new bn_tipo_cuenta(link: $link);
+        $modelo = new cob_tipo_cliente(link: $link);
 
         $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
-            modelo: $modelo, disabled: $disabled, label: 'Tipo Cuenta', required: true);
+            modelo: $modelo, disabled: $disabled, label: 'Tipo cliente', required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }

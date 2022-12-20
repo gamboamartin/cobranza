@@ -1,24 +1,25 @@
 <?php
 namespace html;
 
-use gamboamartin\banco\controllers\controlador_bn_tipo_cuenta;
-use gamboamartin\banco\models\bn_tipo_cuenta;
+use gamboamartin\cobranza\controllers\controlador_cob_pago;
+use gamboamartin\cobranza\models\cob_deuda;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
+use models\cob_pago;
 use PDO;
 use stdClass;
 
-class bn_tipo_cuenta_html extends html_controler {
+class cob_pago_html extends html_controler {
 
-    private function asigna_inputs(controlador_bn_tipo_cuenta $controler, stdClass $inputs): array|stdClass
+    private function asigna_inputs(controlador_cob_pago $controler, stdClass $inputs): array|stdClass
     {
         $controler->inputs->select = new stdClass();
         return $controler->inputs;
     }
 
-    public function genera_inputs_alta(controlador_bn_tipo_cuenta $controler, array $keys_selects,PDO $link): array|stdClass
+    public function genera_inputs_alta(controlador_cob_pago $controler, PDO $link): array|stdClass
     {
-        $inputs = $this->init_alta(keys_selects:$keys_selects, link: $link);
+        $inputs = $this->init_alta(keys_selects: array(), link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
 
@@ -31,7 +32,7 @@ class bn_tipo_cuenta_html extends html_controler {
         return $inputs_asignados;
     }
 
-    private function genera_inputs_modifica(controlador_bn_tipo_cuenta $controler,PDO $link,
+    private function genera_inputs_modifica(controlador_cob_pago $controler,PDO $link,
                                             stdClass $params = new stdClass()): array|stdClass
     {
         $inputs = $this->init_modifica(link: $link, row_upd: $controler->row_upd, params: $params);
@@ -47,9 +48,9 @@ class bn_tipo_cuenta_html extends html_controler {
         return $inputs_asignados;
     }
 
-    protected function init_alta(array $keys_selects,PDO $link): array|stdClass
+    protected function init_alta(array $keys_selects, PDO $link): array|stdClass
     {
-        $selects = $this->selects_alta(keys_selects:$keys_selects, link: $link);
+        $selects = $this->selects_alta(keys_selects: $keys_selects, link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
         }
@@ -84,8 +85,8 @@ class bn_tipo_cuenta_html extends html_controler {
         return $alta_inputs;
     }
 
-    public function inputs_bn_tipo_cuenta(controlador_bn_tipo_cuenta $controlador,
-                                          stdClass $params = new stdClass()): array|stdClass
+    public function inputs_cob_pago(controlador_cob_pago $controlador,
+                                     stdClass $params = new stdClass()): array|stdClass
     {
         $inputs = $this->genera_inputs_modifica(controler: $controlador,
             link: $controlador->link, params: $params);
@@ -95,7 +96,7 @@ class bn_tipo_cuenta_html extends html_controler {
         return $inputs;
     }
 
-    protected function selects_alta(array $keys_selects, PDO $link): array|stdClass
+    protected function selects_alta(array $keys_selects,PDO $link): array|stdClass
     {
         $selects = new stdClass();
         return $selects;
@@ -107,13 +108,12 @@ class bn_tipo_cuenta_html extends html_controler {
         return $selects;
     }
 
-    public function select_bn_tipo_cuenta_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
-                                             bool $disabled = false): array|string
+    public function select_cob_pago_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
     {
-        $modelo = new bn_tipo_cuenta(link: $link);
+        $modelo = new cob_pago(link: $link);
 
-        $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
-            modelo: $modelo, disabled: $disabled, label: 'Tipo Cuenta', required: true);
+        $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
+            modelo: $modelo,label: 'Pago',required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
