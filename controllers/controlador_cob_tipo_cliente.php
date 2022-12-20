@@ -13,8 +13,6 @@ use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_parent_sin_codigo;
 use gamboamartin\system\links_menu;
 use gamboamartin\template\html;
-use html\bn_banco_html;
-use html\bn_sucursal_html;
 use html\cob_tipo_cliente_html;
 
 
