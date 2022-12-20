@@ -1,8 +1,11 @@
-<?php /** @var  \gamboamartin\banco\controllers\controlador_bn_tipo_sucursal $controlador  controlador en ejecucion */ ?>
+<?php /** @var  \gamboamartin\cobranza\controllers\controlador_cob_concepto $controlador  controlador en ejecucion */ ?>
 <?php use config\views; ?>
 
 <?php echo $controlador->inputs->codigo; ?>
 <?php echo $controlador->inputs->descripcion; ?>
+
+<?php echo $controlador->inputs->cob_tipo_concepto_id; ?>
+
 
 <?php include (new views())->ruta_templates.'botons/submit/modifica_bd.php';?>
 
