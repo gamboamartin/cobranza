@@ -6,20 +6,22 @@
  * @final En proceso
  *
  */
-namespace gamboamartin\banco\controllers;
+namespace gamboamartin\cobranza\controllers;
 
-use gamboamartin\banco\models\cob_tipo_cliente;
+use gamboamartin\cobranza\models\cob_tipo_concepto;
 use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_parent_sin_codigo;
 use gamboamartin\system\links_menu;
 use gamboamartin\template\html;
+use html\cob_cliente_html;
 use html\cob_tipo_cliente_html;
+
 
 
 use PDO;
 use stdClass;
 
-class controlador_cob_tipo_cliente extends _ctl_parent_sin_codigo {
+class controlador_cob_tipo_concepto extends _ctl_parent_sin_codigo {
 
     public string $link_cob_cliente_alta_bd = '';
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
@@ -34,7 +36,7 @@ class controlador_cob_tipo_cliente extends _ctl_parent_sin_codigo {
         $datatables->columns['cob_tipo_cliente_id']['titulo'] = 'Id';
         $datatables->columns['cob_tipo_cliente_codigo']['titulo'] = 'Cod';
         $datatables->columns['cob_tipo_cliente_descripcion']['titulo'] = 'Tipo cliente';
-        $datatables->columns['cob_tipo_cliente_n_sucursales']['titulo'] = 'N Clientes';
+        $datatables->columns['cob_tipo_cliente_n_clientes']['titulo'] = 'N Clientes';
 
         $datatables->filtro = array();
         $datatables->filtro[] = 'cob_tipo_cliente.id';
@@ -47,7 +49,7 @@ class controlador_cob_tipo_cliente extends _ctl_parent_sin_codigo {
 
         $this->titulo_lista = 'Tipo Cliente';
 
-        $link_cob_cliente_alta_bd = $this->obj_link->link_alta_bd(link: $link, seccion: 'bn_cliente');
+        $link_cob_cliente_alta_bd = $this->obj_link->link_alta_bd(link: $link, seccion: 'cob_cliente');
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al obtener link',data:  $link_cob_cliente_alta_bd);
             print_r($error);
@@ -57,13 +59,12 @@ class controlador_cob_tipo_cliente extends _ctl_parent_sin_codigo {
 
     }
 
-
     public function clientes(bool $header = true, bool $ws = false): array|string
     {
 
 
         $data_view = new stdClass();
-        $data_view->names = array('Id','Cod','Cliente','Cobranza');
+        $data_view->names = array('Id','Cod','Cliente');
         $data_view->keys_data = array('cob_cliente_id', 'cob_cliente_codigo','cob_cliente_descripcion');
         $data_view->key_actions = 'acciones';
         $data_view->namespace_model = 'gamboamartin\\cobranza\\models';
@@ -85,19 +86,11 @@ class controlador_cob_tipo_cliente extends _ctl_parent_sin_codigo {
     protected function inputs_children(stdClass $registro): stdClass|array
     {
         $select_cob_tipo_cliente_id = (new cob_tipo_cliente_html(html: $this->html_base))->select_cob_tipo_cliente_id(
-            cols:12,con_registros: true,id_selected:  $registro->cob_tipo_cliente_id,link:  $this->link, disabled: true);
+            cols:12,con_registros: true,id_selected:  $registro->cob_tipo_cliente_id,link:  $this->link);
 
         if(errores::$error){
             return $this->errores->error(
                 mensaje: 'Error al obtener select_adm_menu_id',data:  $select_cob_tipo_cliente_id);
-        }
-
-        $select_cob_cliente_id = (new cob_cliente_html(html: $this->html_base))->select_cob_cliente_id(
-            cols:12,con_registros: true,id_selected:  -1,link:  $this->link);
-
-        if(errores::$error){
-            return $this->errores->error(
-                mensaje: 'Error al obtener select_bn_banco_id',data:  $select_cob_cliente_id);
         }
 
         $cob_cliente_codigo = (new cob_cliente_html(html: $this->html_base))->input_codigo(
@@ -108,19 +101,18 @@ class controlador_cob_tipo_cliente extends _ctl_parent_sin_codigo {
         }
 
         $cob_cliente_descripcion = (new cob_cliente_html(html: $this->html_base))->input_descripcion(
-            cols:12,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Cliente');
+            cols:6,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Cliente');
         if(errores::$error){
             return $this->errores->error(
-                mensaje: 'Error al obtener bn_banco_descripcion',data:  $cob_cliente_descripcion);
+                mensaje: 'Error al obtener cob_cliente_descripcion',data:  $cob_cliente_descripcion);
         }
 
 
         $this->inputs = new stdClass();
         $this->inputs->select = new stdClass();
         $this->inputs->select->cob_tipo_cliente_id = $select_cob_tipo_cliente_id;
-        $this->inputs->select->cob_cliente_id = $select_cob_cliente_id;
         $this->inputs->cob_cliente_codigo = $cob_cliente_codigo;
-        $this->inputs->bn_cliente_descripcion = $cob_cliente_descripcion;
+        $this->inputs->cob_cliente_descripcion = $cob_cliente_descripcion;
 
         return $this->inputs;
     }
@@ -134,7 +126,7 @@ class controlador_cob_tipo_cliente extends _ctl_parent_sin_codigo {
         }
 
         $keys_selects = (new \base\controller\init())->key_select_txt(
-            cols: 6,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Tipo Sucursal');
+            cols: 6,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Tipo Cliente');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
