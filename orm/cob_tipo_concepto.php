@@ -1,5 +1,5 @@
 <?php
-namespace gamboamartin\banco\models;
+namespace gamboamartin\cobranza\models;
 use base\orm\_modelo_parent;
 use PDO;
 

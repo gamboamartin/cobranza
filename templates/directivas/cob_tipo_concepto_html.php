@@ -2,7 +2,7 @@
 namespace html;
 
 use gamboamartin\cobranza\controllers\controlador_cob_tipo_concepto;
-use gamboamartin\cobranza\models\cob_tipo_cliente;
+use gamboamartin\cobranza\models\cob_tipo_concepto;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use PDO;
