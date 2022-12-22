@@ -107,7 +107,7 @@ class cob_tipo_cliente_html extends html_controler {
         return $selects;
     }
 
-    public function select_bn_tipo_banco_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
+    public function select_cob_tipo_cliente_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
     {
         $modelo = new cob_tipo_cliente(link: $link);
 
