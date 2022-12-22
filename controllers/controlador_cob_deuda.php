@@ -16,11 +16,9 @@ use gamboamartin\system\links_menu;
 use gamboamartin\template\html;
 use html\cob_cliente_html;
 use html\cob_concepto_html;
-use html\cob_pago_html;
-
-
-use html\bn_cuenta_html;
 use html\cob_deuda_html;
+
+
 use PDO;
 use stdClass;
 
@@ -63,15 +61,15 @@ class controlador_cob_deuda extends _ctl_base {
         }
 
 
-        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cob_concepto_id',
-            keys_selects: array(), id_selected: -1, label: 'Concepto');
+        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cob_cliente_id',
+            keys_selects: array(), id_selected: -1, label: 'Cliente');
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
         }
 
 
-        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'bn_cliente_id',
-            keys_selects: $keys_selects, id_selected: -1, label: 'Cliente');
+        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cob_concepto_id',
+            keys_selects: $keys_selects, id_selected: -1, label: 'Concepto');
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
         }
@@ -101,8 +99,8 @@ class controlador_cob_deuda extends _ctl_base {
         $keys->selects = array();
 
         $init_data = array();
-        $init_data['cob_concepto'] = "gamboamartin\\cobranza";
         $init_data['cob_cliente'] = "gamboamartin\\cobranza";
+        $init_data['cob_concepto'] = "gamboamartin\\cobranza";
         $campos_view = $this->campos_view_base(init_data: $init_data,keys:  $keys);
 
         if(errores::$error){
@@ -115,14 +113,6 @@ class controlador_cob_deuda extends _ctl_base {
 
     protected function inputs_children(stdClass $registro): stdClass|array
     {
-        $select_cob_concepto_id = (new cob_concepto_html(html: $this->html_base))->select_cob_concepto_id(
-            cols:6,con_registros: true,id_selected:  -1,link:  $this->link);
-
-        if(errores::$error){
-            return $this->errores->error(
-                mensaje: 'Error al obtener select_cob_concepto_id',data:  $select_cob_concepto_id);
-        }
-
         $select_cob_cliente_id = (new cob_cliente_html(html: $this->html_base))->select_cob_cliente_id(
             cols:6,con_registros: true,id_selected:  -1,link:  $this->link);
 
@@ -131,12 +121,20 @@ class controlador_cob_deuda extends _ctl_base {
                 mensaje: 'Error al obtener select_cob_cliente_id',data:  $select_cob_cliente_id);
         }
 
+        $select_cob_concepto_id = (new cob_concepto_html(html: $this->html_base))->select_cob_concepto_id(
+            cols:6,con_registros: true,id_selected:  -1,link:  $this->link);
+
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener select_cob_concepto_id',data:  $select_cob_concepto_id);
+        }
+
 
 
         $this->inputs = new stdClass();
         $this->inputs->select = new stdClass();
-        $this->inputs->select->cob_concepto_id = $select_cob_concepto_id;
         $this->inputs->select->cob_cliente_id = $select_cob_cliente_id;
+        $this->inputs->select->cob_concepto_id = $select_cob_concepto_id;
 
 
         return $this->inputs;
@@ -151,7 +149,7 @@ class controlador_cob_deuda extends _ctl_base {
             return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
         }
 
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Deuda');
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'deuda');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
@@ -169,15 +167,14 @@ class controlador_cob_deuda extends _ctl_base {
                 mensaje: 'Error al generar salida de template',data:  $r_modifica,header: $header,ws: $ws);
         }
 
-
-        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cob_concepto_id',
-            keys_selects: array(), id_selected: $this->registro['cob_concepto_id'], label: 'Concepto');
+        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cob_cliente_id',
+            keys_selects: array(), id_selected: $this->registro['cob_cliente_id'], label: 'Cliente');
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
         }
 
-        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cob_cliente_id',
-            keys_selects: $keys_selects, id_selected: $this->registro['cob_cliente_id'], label: 'Cliente');
+        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cob_concepto_id',
+            keys_selects: $keys_selects, id_selected: $this->registro['cob_concepto_id'], label: 'Concepto');
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
         }

@@ -24,9 +24,9 @@ use stdClass;
 
 class controlador_cob_cliente extends _ctl_base {
 
-    public string $link_cob_cliente_alta_bd = '';
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
+
         $modelo = new cob_cliente(link: $link);
         $html_ = new cob_cliente_html(html: $html);
         $obj_link = new links_menu(link: $link, registro_id:$this->registro_id);
@@ -37,7 +37,6 @@ class controlador_cob_cliente extends _ctl_base {
         $datatables->columns['cob_cliente_id']['titulo'] = 'Id';
         $datatables->columns['cob_cliente_codigo']['titulo'] = 'Cod';
         $datatables->columns['cob_cliente_descripcion']['titulo'] = 'Cliente';
-        $datatables->columns['cob_cliente_n_clientes']['titulo'] = 'N Clientes';
 
         $datatables->filtro = array();
         $datatables->filtro[] = 'cob_cliente.id';
@@ -50,14 +49,6 @@ class controlador_cob_cliente extends _ctl_base {
 
         $this->titulo_lista = 'Cliente';
 
-        $link_cob_cliente_alta_bd = $this->obj_link->link_alta_bd(link: $link, seccion: 'cob_cliente');
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al obtener link',data:  $link_cob_cliente_alta_bd);
-            print_r($error);
-            exit;
-        }
-        $this->link_cob_cliente_alta_bd = $link_cob_cliente_alta_bd;
-
     }
 
     public function alta(bool $header, bool $ws = false): array|string
@@ -69,11 +60,13 @@ class controlador_cob_cliente extends _ctl_base {
                 mensaje: 'Error al inicializar alta',data:  $r_alta, header: $header,ws:  $ws);
         }
 
+
         $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cob_tipo_cliente_id',
             keys_selects: array(), id_selected: -1, label: 'Tipo Cliente');
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
         }
+
 
         $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'org_sucursal_id',
             keys_selects: $keys_selects, id_selected: -1, label: 'Sucursal');
@@ -82,9 +75,10 @@ class controlador_cob_cliente extends _ctl_base {
         }
 
 
-        $keys_selects['descripcion'] = new stdClass();
-        $keys_selects['descripcion']->cols = 12;
 
+
+        $keys_selects['descripcion'] = new stdClass();
+        $keys_selects['descripcion']->cols = 6;
 
 
         $inputs = $this->inputs(keys_selects: $keys_selects);
@@ -135,28 +129,13 @@ class controlador_cob_cliente extends _ctl_base {
                 mensaje: 'Error al obtener select_org_sucursal_id',data:  $select_org_sucursal_id);
         }
 
-        $select_cob_cliente_id = (new cob_cliente_html(html: $this->html_base))->select_cob_cliente_id(
-            cols:6,con_registros: true,id_selected: $registro->cob_cliente_id,link:  $this->link);
-
-        if(errores::$error){
-            return $this->errores->error(
-                mensaje: 'Error al obtener select_cob_cliente_id',data:  $select_cob_cliente_id);
-        }
-
-        $cob_cliente_descripcion = (new cob_cliente_html(html: $this->html_base))->input_descripcion(
-            cols:12,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Cliente');
-        if(errores::$error){
-            return $this->errores->error(
-                mensaje: 'Error al obtener cob_cliente_descripcion',data:  $cob_cliente_descripcion);
-        }
 
 
         $this->inputs = new stdClass();
         $this->inputs->select = new stdClass();
         $this->inputs->select->cob_tipo_cliente_id = $select_cob_tipo_cliente_id;
         $this->inputs->select->org_sucursal_id = $select_org_sucursal_id;
-        $this->inputs->cob_cliente_id = $select_cob_cliente_id;
-        $this->inputs->cob_cliente_descripcion = $cob_cliente_descripcion;
+
 
         return $this->inputs;
     }
@@ -170,7 +149,7 @@ class controlador_cob_cliente extends _ctl_base {
             return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
         }
 
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Cliente');
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'cliente');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
@@ -201,6 +180,7 @@ class controlador_cob_cliente extends _ctl_base {
             return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
         }
 
+
         $keys_selects['descripcion'] = new stdClass();
         $keys_selects['descripcion']->cols = 6;
 
@@ -216,30 +196,6 @@ class controlador_cob_cliente extends _ctl_base {
 
 
         return $r_modifica;
-    }
-
-    public function clientes(bool $header = true, bool $ws = false): array|string
-    {
-
-
-        $data_view = new stdClass();
-        $data_view->names = array('Id','Descripcion','Cliente','Tipo Cliente', 'Tipo sucursal');
-        $data_view->keys_data = array('cob_cliente_id','cob_cliente_descripcion','cob_tipo_cliente_descripcion','org_sucursal_descripcion');
-        $data_view->key_actions = 'acciones';
-        $data_view->namespace_model = 'gamboamartin\\cobranza\\models';
-        $data_view->name_model_children = 'cob_cliente';
-
-
-        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
-        if(errores::$error){
-            return $this->retorno_error(
-                mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);
-        }
-
-
-        return $contenido_table;
-
-
     }
 
 

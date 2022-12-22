@@ -2,7 +2,7 @@
 namespace html;
 
 use gamboamartin\cobranza\controllers\controlador_cob_pago;
-use gamboamartin\cobranza\models\cob_deuda;
+
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use models\cob_pago;

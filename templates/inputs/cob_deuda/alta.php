@@ -8,4 +8,5 @@
 <?php echo $controlador->inputs->cob_cliente_id; ?>
 
 
+
 <?php include (new views())->ruta_templates.'botons/submit/alta_bd_otro.php';?>
