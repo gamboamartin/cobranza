@@ -3,6 +3,7 @@ namespace html;
 
 use gamboamartin\cobranza\controllers\controlador_cob_tipo_concepto;
 use gamboamartin\cobranza\models\cob_tipo_concepto;
+use gamboamartin\cobranza\models\cob_tipo_ingreso;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use PDO;
@@ -113,6 +114,18 @@ class cob_tipo_concepto_html extends html_controler {
 
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
             modelo: $modelo,label: 'Tipo Concepto',required: true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select', data: $select);
+        }
+        return $select;
+    }
+
+    public function select_cob_tipo_ingreso_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
+    {
+        $modelo = new cob_tipo_ingreso(link: $link);
+
+        $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
+            modelo: $modelo,label: 'Tipo Ingreso',required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }

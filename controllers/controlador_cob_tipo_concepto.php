@@ -25,6 +25,7 @@ use stdClass;
 class controlador_cob_tipo_concepto extends _ctl_parent_sin_codigo {
 
     public string $link_cob_concepto_alta_bd = '';
+    public string $link_cob_tipo_ingreso_alta_bd = '';
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
         $modelo = new cob_tipo_concepto(link: $link);
@@ -38,6 +39,8 @@ class controlador_cob_tipo_concepto extends _ctl_parent_sin_codigo {
         $datatables->columns['cob_tipo_concepto_codigo']['titulo'] = 'Cod';
         $datatables->columns['cob_tipo_concepto_descripcion']['titulo'] = 'Tipo concepto';
         $datatables->columns['cob_tipo_concepto_n_conceptos']['titulo'] = 'N Conceptos';
+        $datatables->columns['cob_tipo_ingreso_descripcion']['titulo'] = 'Tipo Ingreso';
+
 
         $datatables->filtro = array();
         $datatables->filtro[] = 'cob_tipo_concepto.id';
@@ -58,7 +61,18 @@ class controlador_cob_tipo_concepto extends _ctl_parent_sin_codigo {
         }
         $this->link_cob_concepto_alta_bd = $link_cob_concepto_alta_bd;
 
+        $link_cob_tipo_ingreso_alta_bd = $this->obj_link->link_alta_bd(link: $link, seccion: 'cob_tipo_ingreso');
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al obtener link',data:  $link_cob_tipo_ingreso_alta_bd);
+            print_r($error);
+            exit;
+        }
+        $this->link_cob_tipo_ingreso_alta_bd = $link_cob_tipo_ingreso_alta_bd;
+
     }
+
+
+
 
     public function conceptos(bool $header = true, bool $ws = false): array|string
     {
@@ -66,10 +80,11 @@ class controlador_cob_tipo_concepto extends _ctl_parent_sin_codigo {
 
         $data_view = new stdClass();
         $data_view->names = array('Id','Cod','Concepto','Ingreso');
-        $data_view->keys_data = array('cob_concepto_id', 'cob_concepto_codigo','cob_concepto_descripcion','cob_tipo_ingreso');
+        $data_view->keys_data = array('cob_concepto_id', 'cob_concepto_codigo','cob_concepto_descripcion','cob_tipo_ingreso_id');
         $data_view->key_actions = 'acciones';
         $data_view->namespace_model = 'gamboamartin\\cobranza\\models';
         $data_view->name_model_children = 'cob_concepto';
+
 
 
         $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
@@ -83,6 +98,7 @@ class controlador_cob_tipo_concepto extends _ctl_parent_sin_codigo {
 
 
     }
+
 
     protected function inputs_children(stdClass $registro): stdClass|array
     {

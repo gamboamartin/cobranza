@@ -19,6 +19,7 @@ use html\cob_concepto_html;
 
 use html\bn_cuenta_html;
 use html\cob_deuda_html;
+use html\cob_tipo_concepto_html;
 use PDO;
 use stdClass;
 
