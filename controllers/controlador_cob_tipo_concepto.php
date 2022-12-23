@@ -13,11 +13,11 @@ use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_parent_sin_codigo;
 use gamboamartin\system\links_menu;
 use gamboamartin\template\html;
+use html\cob_cliente_html;
+
+
 use html\cob_concepto_html;
 use html\cob_tipo_concepto_html;
-
-
-
 use PDO;
 use stdClass;
 
@@ -86,7 +86,7 @@ class controlador_cob_tipo_concepto extends _ctl_parent_sin_codigo {
     protected function inputs_children(stdClass $registro): stdClass|array
     {
         $select_cob_tipo_concepto_id = (new cob_tipo_concepto_html(html: $this->html_base))->select_cob_tipo_concepto_id(
-            cols:12,con_registros: true,id_selected:  $registro->cob_tipo_cliente_id,link:  $this->link);
+            cols:12,con_registros: true,id_selected:  $registro->cob_tipo_concepto_id,link:  $this->link);
 
         if(errores::$error){
             return $this->errores->error(
