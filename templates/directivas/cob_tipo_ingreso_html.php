@@ -107,12 +107,13 @@ class cob_tipo_ingreso_html extends html_controler {
         return $selects;
     }
 
-    public function select_cob_tipo_ingreso_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
+    public function select_cob_tipo_ingreso_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
+                                               bool $disabled = false): array|string
     {
         $modelo = new cob_tipo_ingreso(link: $link);
 
-        $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo,label: 'Tipo Ingreso',required: true);
+        $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
+            modelo: $modelo, disabled: $disabled, label: 'Tipo Ingreso', required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }

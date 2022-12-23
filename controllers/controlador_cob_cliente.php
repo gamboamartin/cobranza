@@ -198,6 +198,28 @@ class controlador_cob_cliente extends _ctl_base {
         return $r_modifica;
     }
 
+    public function usuarios(bool $header = true, bool $ws = false): array|string
+    {
+        $data_view = new stdClass();
+        $data_view->names = array('Id','User','Email','Telefono','Grupo','Acciones');
+        $data_view->keys_data = array('adm_usuario_id','adm_usuario_user','adm_usuario_email',
+            'adm_usuario_telefono','adm_grupo_descripcion');
+        $data_view->key_actions = 'acciones';
+        $data_view->namespace_model = 'gamboamartin\\administrador\\models';
+        $data_view->name_model_children = 'adm_usuario';
+
+        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
+        if(errores::$error){
+            return $this->retorno_error(
+                mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);
+        }
+
+
+        return $contenido_table;
+
+
+    }
+
 
 
 
