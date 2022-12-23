@@ -1,11 +1,5 @@
 <?php
-/**
- * @author Martin Gamboa Vazquez
- * @version 1.0.0
- * @created 2022-05-14
- * @final En proceso
- *
- */
+
 namespace gamboamartin\cobranza\controllers;
 
 use gamboamartin\cobranza\models\cob_tipo_ingreso;
@@ -13,7 +7,6 @@ use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_parent_sin_codigo;
 use gamboamartin\system\links_menu;
 use gamboamartin\template\html;
-use html\cob_ingreso_html;
 use html\cob_tipo_ingreso_html;
 
 
@@ -23,7 +16,6 @@ use stdClass;
 
 class controlador_cob_tipo_ingreso extends _ctl_parent_sin_codigo {
 
-    public string $link_cob_ingreso_alta_bd = '';
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
         $modelo = new cob_tipo_ingreso(link: $link);
@@ -35,8 +27,7 @@ class controlador_cob_tipo_ingreso extends _ctl_parent_sin_codigo {
         $datatables->columns = array();
         $datatables->columns['cob_tipo_ingreso_id']['titulo'] = 'Id';
         $datatables->columns['cob_tipo_ingreso_codigo']['titulo'] = 'Cod';
-        $datatables->columns['cob_tipo_ingreso_descripcion']['titulo'] = 'Tipo ingreso';
-        $datatables->columns['cob_tipo_ingreso_n_ingresos']['titulo'] = 'N Ingresos';
+        $datatables->columns['cob_tipo_ingreso_descripcion']['titulo'] = 'Tipo Ingreso';
 
         $datatables->filtro = array();
         $datatables->filtro[] = 'cob_tipo_ingreso.id';
@@ -49,39 +40,9 @@ class controlador_cob_tipo_ingreso extends _ctl_parent_sin_codigo {
 
         $this->titulo_lista = 'Tipo Ingreso';
 
-        $link_cob_ingreso_alta_bd = $this->obj_link->link_alta_bd(link: $link, seccion: 'cob_ingreso');
-        if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al obtener link',data:  $link_cob_ingreso_alta_bd);
-            print_r($error);
-            exit;
-        }
-        $this->link_cob_ingreso_alta_bd = $link_cob_ingreso_alta_bd;
-
     }
 
-    public function ingresos(bool $header = true, bool $ws = false): array|string
-    {
 
-
-        $data_view = new stdClass();
-        $data_view->names = array('Id','Cod','Ingreso');
-        $data_view->keys_data = array('cob_ingreso_id', 'cob_ingreso_codigo','cob_ingreso_descripcion');
-        $data_view->key_actions = 'acciones';
-        $data_view->namespace_model = 'gamboamartin\\cobranza\\models';
-        $data_view->name_model_children = 'cob_ingreso';
-
-
-        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
-        if(errores::$error){
-            return $this->retorno_error(
-                mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);
-        }
-
-
-        return $contenido_table;
-
-
-    }
 
     protected function inputs_children(stdClass $registro): stdClass|array
     {
@@ -92,28 +53,9 @@ class controlador_cob_tipo_ingreso extends _ctl_parent_sin_codigo {
             return $this->errores->error(
                 mensaje: 'Error al obtener select_cob_tipo_ingreso_id',data:  $select_cob_tipo_ingreso_id);
         }
-
-        $cob_ingreso_codigo = (new cob_ingreso_html(html: $this->html_base))->input_codigo(
-            cols:6,row_upd:  new stdClass(),value_vacio:  false);
-        if(errores::$error){
-            return $this->errores->error(
-                mensaje: 'Error al obtener cob_concepto_codigo',data:  $cob_ingreso_codigo);
-        }
-
-        $cob_ingreso_descripcion = (new cob_ingreso_html(html: $this->html_base))->input_descripcion(
-            cols:6,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Ingreso');
-        if(errores::$error){
-            return $this->errores->error(
-                mensaje: 'Error al obtener cob_ingreso_descripcion',data:  $cob_ingreso_descripcion);
-        }
-
-
         $this->inputs = new stdClass();
         $this->inputs->select = new stdClass();
-        $this->inputs->select->cob_tipo_ingreso_id = $select_cob_tipo_ingreso_id;
-        $this->inputs->cob_ingreso_codigo = $cob_ingreso_codigo;
-        $this->inputs->cob_ingreso_descripcion = $cob_ingreso_descripcion;
-
+        $this->inputs->select->cob_tipo_cliente_id = $select_cob_tipo_ingreso_id;
         return $this->inputs;
     }
 

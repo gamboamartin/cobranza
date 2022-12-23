@@ -4,6 +4,9 @@
 <?php echo $controlador->inputs->codigo; ?>
 <?php echo $controlador->inputs->descripcion; ?>
 
+
+<?php echo $controlador->inputs->cob_tipo_ingreso_id; ?>
+
 <?php include (new views())->ruta_templates.'botons/submit/modifica_bd.php';?>
 
 <div class="cold-row-12">

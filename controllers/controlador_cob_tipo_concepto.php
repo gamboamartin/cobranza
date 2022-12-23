@@ -18,6 +18,7 @@ use html\cob_cliente_html;
 
 use html\cob_concepto_html;
 use html\cob_tipo_concepto_html;
+use html\cob_tipo_ingreso_html;
 use PDO;
 use stdClass;
 
@@ -64,8 +65,8 @@ class controlador_cob_tipo_concepto extends _ctl_parent_sin_codigo {
 
 
         $data_view = new stdClass();
-        $data_view->names = array('Id','Cod','Concepto');
-        $data_view->keys_data = array('cob_concepto_id', 'cob_concepto_codigo','cob_concepto_descripcion');
+        $data_view->names = array('Id','Cod','Concepto','Ingreso');
+        $data_view->keys_data = array('cob_concepto_id', 'cob_concepto_codigo','cob_concepto_descripcion','cob_tipo_ingreso');
         $data_view->key_actions = 'acciones';
         $data_view->namespace_model = 'gamboamartin\\cobranza\\models';
         $data_view->name_model_children = 'cob_concepto';
@@ -93,6 +94,14 @@ class controlador_cob_tipo_concepto extends _ctl_parent_sin_codigo {
                 mensaje: 'Error al obtener select_cob_tipo_concepto_id',data:  $select_cob_tipo_concepto_id);
         }
 
+        $select_cob_tipo_ingreso_id = (new cob_tipo_ingreso_html(html: $this->html_base))->select_cob_tipo_ingreso_id(
+            cols:12,con_registros: true,id_selected:  $registro->cob_tipo_ingreso_id,link:  $this->link);
+
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener select_cob_tipo_ingreso_id',data:  $select_cob_tipo_ingreso_id);
+        }
+
         $cob_concepto_codigo = (new cob_concepto_html(html: $this->html_base))->input_codigo(
             cols:6,row_upd:  new stdClass(),value_vacio:  false);
         if(errores::$error){
@@ -111,6 +120,7 @@ class controlador_cob_tipo_concepto extends _ctl_parent_sin_codigo {
         $this->inputs = new stdClass();
         $this->inputs->select = new stdClass();
         $this->inputs->select->cob_tipo_concepto_id = $select_cob_tipo_concepto_id;
+        $this->inputs->select->cob_tipo_ingreso_id = $select_cob_tipo_ingreso_id;
         $this->inputs->cob_concepto_codigo = $cob_concepto_codigo;
         $this->inputs->cob_concepto_descripcion = $cob_concepto_descripcion;
 

@@ -85,7 +85,7 @@ class cob_tipo_ingreso_html extends html_controler {
     }
 
     public function inputs_cob_tipo_ingreso(controlador_cob_tipo_ingreso $controlador,
-                                       stdClass $params = new stdClass()): array|stdClass
+                                            stdClass $params = new stdClass()): array|stdClass
     {
         $inputs = $this->genera_inputs_modifica(controler: $controlador,
             link: $controlador->link, params: $params);
@@ -107,13 +107,12 @@ class cob_tipo_ingreso_html extends html_controler {
         return $selects;
     }
 
-    public function select_cob_tipo_cliente_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
-                                               bool $disabled = false): array|string
+    public function select_cob_tipo_ingreso_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
     {
         $modelo = new cob_tipo_ingreso(link: $link);
 
-        $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
-            modelo: $modelo, disabled: $disabled, label: 'Tipo ingreso', required: true);
+        $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
+            modelo: $modelo,label: 'Tipo Ingreso',required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
