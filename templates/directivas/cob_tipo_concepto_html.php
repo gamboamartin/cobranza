@@ -2,10 +2,10 @@
 namespace html;
 
 use gamboamartin\cobranza\controllers\controlador_cob_tipo_concepto;
-use gamboamartin\cobranza\models\cob_tipo_concepto;
-use gamboamartin\cobranza\models\cob_tipo_ingreso;
+
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
+use models\cob_tipo_concepto;
 use PDO;
 use stdClass;
 
@@ -17,9 +17,9 @@ class cob_tipo_concepto_html extends html_controler {
         return $controler->inputs;
     }
 
-    public function genera_inputs_alta(controlador_cob_tipo_concepto $controler, array $keys_selects,PDO $link): array|stdClass
+    public function genera_inputs_alta(controlador_cob_tipo_concepto $controler, PDO $link): array|stdClass
     {
-        $inputs = $this->init_alta(keys_selects:$keys_selects, link: $link);
+        $inputs = $this->init_alta(keys_selects: array(), link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
 
@@ -48,9 +48,9 @@ class cob_tipo_concepto_html extends html_controler {
         return $inputs_asignados;
     }
 
-    protected function init_alta(array $keys_selects,PDO $link): array|stdClass
+    protected function init_alta(array $keys_selects, PDO $link): array|stdClass
     {
-        $selects = $this->selects_alta(keys_selects:$keys_selects, link: $link);
+        $selects = $this->selects_alta(keys_selects: $keys_selects, link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
         }
@@ -85,8 +85,8 @@ class cob_tipo_concepto_html extends html_controler {
         return $alta_inputs;
     }
 
-    public function inputs_cob_tipo_concepto(controlador_cob_tipo_concepto $controlador,
-                                            stdClass $params = new stdClass()): array|stdClass
+    public function inputs_tipo_concepto(controlador_cob_tipo_concepto $controlador,
+                                    stdClass $params = new stdClass()): array|stdClass
     {
         $inputs = $this->genera_inputs_modifica(controler: $controlador,
             link: $controlador->link, params: $params);
@@ -96,7 +96,7 @@ class cob_tipo_concepto_html extends html_controler {
         return $inputs;
     }
 
-    protected function selects_alta(array $keys_selects, PDO $link): array|stdClass
+    protected function selects_alta(array $keys_selects,PDO $link): array|stdClass
     {
         $selects = new stdClass();
         return $selects;
@@ -114,18 +114,6 @@ class cob_tipo_concepto_html extends html_controler {
 
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
             modelo: $modelo,label: 'Tipo Concepto',required: true);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select', data: $select);
-        }
-        return $select;
-    }
-
-    public function select_cob_tipo_ingreso_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
-    {
-        $modelo = new cob_tipo_ingreso(link: $link);
-
-        $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo,label: 'Tipo Ingreso',required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }

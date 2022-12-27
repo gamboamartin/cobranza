@@ -10,7 +10,6 @@
                         <?php include (new views())->ruta_templates."head/subtitulo.php"; ?>
                         <?php include (new views())->ruta_templates."mensajes.php"; ?>
 
-                        <?php echo $controlador->inputs->select->cob_tipo_concepto_id; ?>
                         <?php echo $controlador->inputs->cob_concepto_codigo; ?>
                         <?php echo $controlador->inputs->cob_concepto_descripcion; ?>
 
