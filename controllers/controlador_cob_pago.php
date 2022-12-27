@@ -79,8 +79,12 @@ class controlador_cob_pago extends _ctl_base {
 
 
 
+
         $keys_selects['descripcion'] = new stdClass();
         $keys_selects['descripcion']->cols = 6;
+
+        $keys_selects['fecha de pago'] = new stdClass();
+        $keys_selects['fecha de pago']->cols = 12;
 
 
 
@@ -155,7 +159,7 @@ class controlador_cob_pago extends _ctl_base {
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
 
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'fecha de pago', keys_selects:$keys_selects, place_holder: 'Fecha de Pago');
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 12,key: 'fecha_de_pago', keys_selects:$keys_selects, place_holder: 'Fecha de Pago');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }

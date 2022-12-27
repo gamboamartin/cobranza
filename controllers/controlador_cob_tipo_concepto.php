@@ -138,6 +138,13 @@ public string $link_cob_concepto_alta_bd = '';
 
     protected function inputs_children(stdClass $registro): stdClass|array
     {
+        $cob_concepto_id = (new cob_concepto_html(html: $this->html_base))->input_codigo(
+            cols:6,row_upd:  new stdClass(),value_vacio:  false);
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener cob_concepto_id',data:  $cob_concepto_id);
+        }
+
         $cob_concepto_codigo = (new cob_concepto_html(html: $this->html_base))->input_codigo(
             cols:6,row_upd:  new stdClass(),value_vacio:  false);
         if(errores::$error){
@@ -155,6 +162,7 @@ public string $link_cob_concepto_alta_bd = '';
 
         $this->inputs = new stdClass();
         $this->inputs->select = new stdClass();
+        $this->inputs->cob_concepto_id = $cob_concepto_id;
         $this->inputs->cob_concepto_codigo = $cob_concepto_codigo;
         $this->inputs->cob_concepto_descripcion = $cob_concepto_descripcion;
 
