@@ -37,11 +37,13 @@ class controlador_cob_pago extends _ctl_base {
         $datatables->columns['cob_pago_id']['titulo'] = 'Id';
         $datatables->columns['cob_pago_codigo']['titulo'] = 'Cod';
         $datatables->columns['cob_pago_descripcion']['titulo'] = 'Pago';
+        $datatables->columns['cob_pago_fecha_de_pago']['titulo'] = 'Fecha de Pago';
 
         $datatables->filtro = array();
         $datatables->filtro[] = 'cob_pago.id';
         $datatables->filtro[] = 'cob_pago.codigo';
         $datatables->filtro[] = 'cob_pago.descripcion';
+        $datatables->filtro[] = 'cob_pago.fecha_de_pago';
 
 
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link,
@@ -67,7 +69,6 @@ class controlador_cob_pago extends _ctl_base {
             return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
         }
 
-
         $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'bn_cuenta_id',
             keys_selects: $keys_selects, id_selected: -1, label: 'Cuenta');
         if(errores::$error){
@@ -77,8 +78,10 @@ class controlador_cob_pago extends _ctl_base {
 
 
 
+
         $keys_selects['descripcion'] = new stdClass();
         $keys_selects['descripcion']->cols = 6;
+
 
 
         $inputs = $this->inputs(keys_selects: $keys_selects);
@@ -95,7 +98,7 @@ class controlador_cob_pago extends _ctl_base {
     protected function campos_view(): array
     {
         $keys = new stdClass();
-        $keys->inputs = array('codigo','descripcion');
+        $keys->inputs = array('codigo','descripcion','fecha_de_pago');
         $keys->selects = array();
 
         $init_data = array();
@@ -129,8 +132,6 @@ class controlador_cob_pago extends _ctl_base {
                 mensaje: 'Error al obtener select_org_sucursal_id',data:  $select_bn_cuenta_id);
         }
 
-
-
         $this->inputs = new stdClass();
         $this->inputs->select = new stdClass();
         $this->inputs->select->cob_deuda_id = $select_cob_deuda_id;
@@ -154,6 +155,10 @@ class controlador_cob_pago extends _ctl_base {
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
 
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'fecha de pago', keys_selects:$keys_selects, place_holder: 'Fecha de Pago');
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
+        }
 
         return $keys_selects;
     }
@@ -186,6 +191,9 @@ class controlador_cob_pago extends _ctl_base {
 
         $keys_selects['codigo'] = new stdClass();
         $keys_selects['codigo']->disabled = true;
+
+        $keys_selects['Fecha de Pago'] = new stdClass();
+        $keys_selects['Fecha de Pago']->cols = 6;
 
         $base = $this->base_upd(keys_selects: $keys_selects, not_actions: array(__FUNCTION__), params: array(),params_ajustados: array());
         if(errores::$error){
