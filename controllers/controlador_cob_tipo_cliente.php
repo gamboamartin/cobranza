@@ -126,7 +126,7 @@ class controlador_cob_tipo_cliente extends _ctl_parent_sin_codigo {
         }
 
         $keys_selects = (new \base\controller\init())->key_select_txt(
-            cols: 6,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Tipo Cliente');
+            cols: 12,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Tipo Cliente');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
