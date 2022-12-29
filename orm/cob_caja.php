@@ -1,7 +1,9 @@
 <?php
 namespace gamboamartin\cobranza\models;
 use base\orm\_modelo_parent;
+use gamboamartin\errores\errores;
 use PDO;
+use stdClass;
 
 class cob_caja extends _modelo_parent {
 
@@ -23,6 +25,8 @@ class cob_caja extends _modelo_parent {
 
         $this->NAMESPACE = __NAMESPACE__;
     }
+
+
 
 
 }

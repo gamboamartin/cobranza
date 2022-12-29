@@ -75,8 +75,6 @@ class controlador_cob_deuda extends _ctl_base {
         }
 
 
-
-
         $keys_selects['descripcion'] = new stdClass();
         $keys_selects['descripcion']->cols = 6;
 
@@ -95,8 +93,9 @@ class controlador_cob_deuda extends _ctl_base {
     protected function campos_view(): array
     {
         $keys = new stdClass();
-        $keys->inputs = array('codigo','descripcion');
+        $keys->inputs = array('codigo','descripcion','monto');
         $keys->selects = array();
+        $keys->fechas = array('fecha_vencimiento');
 
         $init_data = array();
         $init_data['cob_cliente'] = "gamboamartin\\cobranza";
@@ -149,7 +148,6 @@ class controlador_cob_deuda extends _ctl_base {
             return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
         }
 
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'deuda');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
