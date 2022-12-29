@@ -37,11 +37,21 @@ class controlador_cob_cliente extends _ctl_base {
         $datatables->columns['cob_cliente_id']['titulo'] = 'Id';
         $datatables->columns['cob_cliente_codigo']['titulo'] = 'Cod';
         $datatables->columns['cob_cliente_descripcion']['titulo'] = 'Cliente';
+        $datatables->columns['cob_cliente_nombre']['titulo'] = 'Nombre';
+        $datatables->columns['cob_cliente_ap']['titulo'] = 'AP';
+        $datatables->columns['cob_cliente_am']['titulo'] = 'AM';
+        $datatables->columns['cob_tipo_cliente_descripcion']['titulo'] = 'Tipo Cliente';
+        $datatables->columns['org_sucursal_descripcion']['titulo'] = 'Sucursal';
 
         $datatables->filtro = array();
         $datatables->filtro[] = 'cob_cliente.id';
         $datatables->filtro[] = 'cob_cliente.codigo';
         $datatables->filtro[] = 'cob_cliente.descripcion';
+        $datatables->filtro[] = 'cob_cliente.nombre';
+        $datatables->filtro[] = 'cob_cliente.ap';
+        $datatables->filtro[] = 'cob_cliente.am';
+        $datatables->filtro[] = 'cob_tipo_cliente.descripcion';
+        $datatables->filtro[] = 'org_sucursal.descripcion';
 
 
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link,
@@ -76,7 +86,6 @@ class controlador_cob_cliente extends _ctl_base {
 
 
 
-
         $keys_selects['descripcion'] = new stdClass();
         $keys_selects['descripcion']->cols = 6;
 
@@ -95,7 +104,7 @@ class controlador_cob_cliente extends _ctl_base {
     protected function campos_view(): array
     {
         $keys = new stdClass();
-        $keys->inputs = array('codigo','descripcion');
+        $keys->inputs = array('codigo','descripcion','nombre','ap','am','razon_social','rfc','curp');
         $keys->selects = array();
 
         $init_data = array();
@@ -111,34 +120,6 @@ class controlador_cob_cliente extends _ctl_base {
         return $campos_view;
     }
 
-    protected function inputs_children(stdClass $registro): stdClass|array
-    {
-        $select_cob_tipo_cliente_id = (new cob_tipo_cliente_html(html: $this->html_base))->select_cob_tipo_cliente_id(
-            cols:6,con_registros: true,id_selected:  -1,link:  $this->link);
-
-        if(errores::$error){
-            return $this->errores->error(
-                mensaje: 'Error al obtener select_cob_tipo_cliente_id',data:  $select_cob_tipo_cliente_id);
-        }
-
-        $select_org_sucursal_id = (new org_sucursal_html(html: $this->html_base))->select_org_sucursal_id(
-            cols:6,con_registros: true,id_selected:  -1,link:  $this->link);
-
-        if(errores::$error){
-            return $this->errores->error(
-                mensaje: 'Error al obtener select_org_sucursal_id',data:  $select_org_sucursal_id);
-        }
-
-
-
-        $this->inputs = new stdClass();
-        $this->inputs->select = new stdClass();
-        $this->inputs->select->cob_tipo_cliente_id = $select_cob_tipo_cliente_id;
-        $this->inputs->select->org_sucursal_id = $select_org_sucursal_id;
-
-
-        return $this->inputs;
-    }
 
 
     protected function key_selects_txt(array $keys_selects): array
@@ -150,6 +131,36 @@ class controlador_cob_cliente extends _ctl_base {
         }
 
         $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'cliente');
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
+        }
+
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'nombre', keys_selects:$keys_selects, place_holder: 'Nombre');
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
+        }
+
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'ap', keys_selects:$keys_selects, place_holder: 'AP');
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
+        }
+
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'am', keys_selects:$keys_selects, place_holder: 'AM');
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
+        }
+
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'razon_social', keys_selects:$keys_selects, place_holder: 'Razon Social');
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
+        }
+
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'rfc', keys_selects:$keys_selects, place_holder: 'RFC');
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
+        }
+
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'curp', keys_selects:$keys_selects, place_holder: 'CURP');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
@@ -187,6 +198,8 @@ class controlador_cob_cliente extends _ctl_base {
         $keys_selects['codigo'] = new stdClass();
         $keys_selects['codigo']->disabled = true;
 
+
+
         $base = $this->base_upd(keys_selects: $keys_selects, not_actions: array(__FUNCTION__), params: array(),params_ajustados: array());
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al integrar base',data:  $base, header: $header,ws:  $ws);
@@ -198,27 +211,7 @@ class controlador_cob_cliente extends _ctl_base {
         return $r_modifica;
     }
 
-    public function usuarios(bool $header = true, bool $ws = false): array|string
-    {
-        $data_view = new stdClass();
-        $data_view->names = array('Id','User','Email','Telefono','Grupo','Acciones');
-        $data_view->keys_data = array('adm_usuario_id','adm_usuario_user','adm_usuario_email',
-            'adm_usuario_telefono','adm_grupo_descripcion');
-        $data_view->key_actions = 'acciones';
-        $data_view->namespace_model = 'gamboamartin\\administrador\\models';
-        $data_view->name_model_children = 'adm_usuario';
 
-        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
-        if(errores::$error){
-            return $this->retorno_error(
-                mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);
-        }
-
-
-        return $contenido_table;
-
-
-    }
 
 
 

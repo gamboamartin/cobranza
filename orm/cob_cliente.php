@@ -7,7 +7,7 @@ class cob_cliente extends _modelo_parent {
 
     public function __construct(PDO $link){
         $tabla = 'cob_cliente';
-        $columnas = array($tabla=>false,'cob_tipo_cliente'=>$tabla,'org_sucursal'=>$tabla);
+        $columnas = array($tabla=>false,'cob_tipo_cliente'=>$tabla,'org_sucursal'=>$tabla,'org_empresa'=>'org_sucursal');
         $campos_obligatorios[] = 'descripcion';
         $campos_obligatorios[] = 'descripcion_select';
 
