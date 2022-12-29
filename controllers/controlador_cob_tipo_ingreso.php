@@ -71,7 +71,7 @@ class controlador_cob_tipo_ingreso extends _ctl_parent_sin_codigo {
         }
 
         $cob_tipo_concepto_descripcion = (new cob_tipo_concepto_html(html: $this->html_base))->input_descripcion(
-            cols: 6,row_upd: new stdClass(),value_vacio:  false);
+            cols: 12,row_upd: new stdClass(),value_vacio:  false);
         if(errores::$error){
             return $this->errores->error(
                 mensaje: 'Error al obtener cob_tipo_concepto_descripcion',data:  $cob_tipo_concepto_descripcion);
@@ -96,7 +96,7 @@ class controlador_cob_tipo_ingreso extends _ctl_parent_sin_codigo {
         }
 
         $keys_selects = (new \base\controller\init())->key_select_txt(
-            cols: 6,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Tipo Ingreso');
+            cols: 12,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Tipo Ingreso');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }

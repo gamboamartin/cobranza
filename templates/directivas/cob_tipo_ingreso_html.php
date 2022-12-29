@@ -107,6 +107,14 @@ class cob_tipo_ingreso_html extends html_controler {
         return $selects;
     }
 
+    /**
+     * @param int $cols
+     * @param bool $con_registros
+     * @param int $id_selected
+     * @param PDO $link
+     * @param bool $disabled
+     * @return array|string
+     */
     public function select_cob_tipo_ingreso_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
                                                bool $disabled = false): array|string
     {
