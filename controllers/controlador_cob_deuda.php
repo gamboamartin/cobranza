@@ -37,11 +37,15 @@ class controlador_cob_deuda extends _ctl_base {
         $datatables->columns['cob_deuda_id']['titulo'] = 'Id';
         $datatables->columns['cob_deuda_codigo']['titulo'] = 'Cod';
         $datatables->columns['cob_deuda_descripcion']['titulo'] = 'Deuda';
+        $datatables->columns['cob_deuda_monto']['titulo'] = 'Monto';
+        $datatables->columns['cob_deuda_fecha_vencimiento']['titulo'] = 'Fecha de vencimiento';
 
         $datatables->filtro = array();
         $datatables->filtro[] = 'cob_deuda.id';
         $datatables->filtro[] = 'cob_deuda.codigo';
         $datatables->filtro[] = 'cob_deuda.descripcion';
+        $datatables->filtro[] = 'cob_deuda.monto';
+        $datatables->filtro[] = 'cob_deuda.fecha_vencimiento';
 
 
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link,
