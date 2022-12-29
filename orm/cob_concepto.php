@@ -7,7 +7,7 @@ class cob_concepto extends _modelo_parent {
 
     public function __construct(PDO $link){
         $tabla = 'cob_concepto';
-        $columnas = array($tabla=>false,'cob_tipo_concepto'=>$tabla);
+        $columnas = array($tabla=>false,'cob_tipo_concepto'=>$tabla,'cob_tipo_ingreso'=>'cob_tipo_concepto');
         $campos_obligatorios[] = 'descripcion';
         $campos_obligatorios[] = 'descripcion_select';
 

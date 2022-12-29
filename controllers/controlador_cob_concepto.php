@@ -38,11 +38,15 @@ class controlador_cob_concepto extends _ctl_base {
         $datatables->columns['cob_concepto_id']['titulo'] = 'Id';
         $datatables->columns['cob_concepto_codigo']['titulo'] = 'Cod';
         $datatables->columns['cob_concepto_descripcion']['titulo'] = 'Concepto';
+        $datatables->columns['cob_tipo_concepto_descripcion']['titulo'] = 'Tipo Concepto';
+        $datatables->columns['cob_tipo_ingreso_descripcion']['titulo'] = 'Tipo Ingreso';
 
         $datatables->filtro = array();
         $datatables->filtro[] = 'cob_concepto.id';
         $datatables->filtro[] = 'cob_concepto.codigo';
         $datatables->filtro[] = 'cob_concepto.descripcion';
+        $datatables->filtro[] = 'cob_tipo_concepto.descripcion';
+        $datatables->filtro[] = 'cob_tipo_ingreso.descripcion';
 
 
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link,
