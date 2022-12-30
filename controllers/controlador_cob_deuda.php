@@ -19,6 +19,7 @@ use html\cob_concepto_html;
 use html\cob_deuda_html;
 
 
+use html\cob_pago_html;
 use PDO;
 use stdClass;
 
@@ -66,29 +67,6 @@ class controlador_cob_deuda extends _ctl_base {
 
     }
 
-    public function pagos(bool $header = true, bool $ws = false): array|string
-    {
-
-
-        $data_view = new stdClass();
-        $data_view->names = array('Id','Cod','Pago');
-        $data_view->keys_data = array('cob_pago_id', 'cob_pago_codigo','cob_pago_descripcion');
-        $data_view->key_actions = 'acciones';
-        $data_view->namespace_model = 'gamboamartin\\cobranza\\models';
-        $data_view->name_model_children = 'cob_pago';
-
-
-        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
-        if(errores::$error){
-            return $this->retorno_error(
-                mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);
-        }
-
-
-        return $contenido_table;
-
-
-    }
 
     public function alta(bool $header, bool $ws = false): array|string
     {
@@ -167,12 +145,20 @@ class controlador_cob_deuda extends _ctl_base {
                 mensaje: 'Error al obtener select_cob_concepto_id',data:  $select_cob_concepto_id);
         }
 
+        $cob_pago_descripcion = (new cob_pago_html(html: $this->html_base))->input_descripcion(
+            cols:12,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Pago');
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener cob_pago_descripcion',data:  $cob_pago_descripcion);
+        }
+
 
 
         $this->inputs = new stdClass();
         $this->inputs->select = new stdClass();
         $this->inputs->select->cob_cliente_id = $select_cob_cliente_id;
         $this->inputs->select->cob_concepto_id = $select_cob_concepto_id;
+        $this->inputs->cob_pago_descripcion = $cob_pago_descripcion;
 
 
         return $this->inputs;
@@ -237,6 +223,31 @@ class controlador_cob_deuda extends _ctl_base {
 
         return $r_modifica;
     }
+    public function pagos(bool $header = true, bool $ws = false): array|string
+    {
+
+
+        $data_view = new stdClass();
+        $data_view->names = array('Id','Cod','Pago','Fecha de pago','Deuda','Cuenta');
+        $data_view->keys_data = array('cob_pago_id', 'cob_pago_codigo','cob_pago_fecha_de_pago'
+        ,'fecha_de_pago','cob_deuda_id','bn_cuenta_id');
+        $data_view->key_actions = 'acciones';
+        $data_view->namespace_model = 'gamboamartin\\cobranza\\models';
+        $data_view->name_model_children = 'cob_pago';
+
+
+        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
+        if(errores::$error){
+            return $this->retorno_error(
+                mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);
+        }
+
+
+        return $contenido_table;
+
+
+    }
+
 
 
 
