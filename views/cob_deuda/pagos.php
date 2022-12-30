@@ -11,10 +11,10 @@
                         <?php include (new views())->ruta_templates."mensajes.php"; ?>
 
                         <?php echo $controlador->inputs->select->cob_deuda_id; ?>
+                        <?php echo $controlador->inputs->select->bn_cuenta_id; ?>
                         <?php echo $controlador->inputs->cob_pago_codigo; ?>
                         <?php echo $controlador->inputs->cob_pago_descripcion; ?>
                         <?php echo $controlador->inputs->cob_pago_fecha_de_pago; ?>
-
                         <?php echo $controlador->inputs->hidden_row_id; ?>
                         <?php echo $controlador->inputs->hidden_seccion_retorno; ?>
                         <?php echo $controlador->inputs->hidden_id_retorno; ?>

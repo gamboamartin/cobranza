@@ -15,6 +15,7 @@ use gamboamartin\system\links_menu;
 
 use gamboamartin\template\html;
 
+use html\bn_cuenta_html;
 use html\cob_cliente_html;
 use html\cob_concepto_html;
 use html\cob_deuda_html;
@@ -137,6 +138,13 @@ class controlador_cob_deuda extends _ctl_base {
             return $this->errores->error(
                 mensaje: 'Error al obtener select_cob_cliente_id',data:  $select_cob_cliente_id);
         }
+        $select_bn_cuenta_id = (new bn_cuenta_html(html: $this->html_base))->select_bn_cuenta_id(
+            cols:12,con_registros: true,id_selected:  -1,link:  $this->link);
+
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener select_cob_cliente_id',data:  $select_bn_cuenta_id);
+        }
 
         $select_cob_concepto_id = (new cob_concepto_html(html: $this->html_base))->select_cob_concepto_id(
             cols:6,con_registros: true,id_selected:  -1,link:  $this->link);
@@ -174,7 +182,7 @@ class controlador_cob_deuda extends _ctl_base {
                 mensaje: 'Error al obtener cob_pago_fecha_de_pago',data:  $cob_pago_fecha_de_pago);
         }
 
- 
+
 
 
 
@@ -183,6 +191,7 @@ class controlador_cob_deuda extends _ctl_base {
         $this->inputs = new stdClass();
         $this->inputs->select = new stdClass();
         $this->inputs->select->cob_cliente_id = $select_cob_cliente_id;
+        $this->inputs->select->bn_cuenta_id = $select_bn_cuenta_id;
         $this->inputs->select->cob_concepto_id = $select_cob_concepto_id;
         $this->inputs->cob_pago_descripcion = $cob_pago_descripcion;
         $this->inputs->cob_pago_codigo = $cob_pago_codigo;
