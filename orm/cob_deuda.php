@@ -15,10 +15,12 @@ class cob_deuda extends _modelo_parent {
 
         $tipo_campos['codigos'] = 'cod_1_letras_mayusc';
 
+        $columnas_extra['cob_deuda_n_pagos'] = /** @lang sql */
+            "(SELECT COUNT(*) FROM cob_pago WHERE cob_pago.cob_deuda_id = cob_pago.id)";
 
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas, tipo_campos: $tipo_campos);
+            columnas: $columnas, columnas_extra: $columnas_extra, tipo_campos: $tipo_campos);
 
         $this->NAMESPACE = __NAMESPACE__;
     }

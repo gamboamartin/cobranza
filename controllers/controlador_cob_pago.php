@@ -24,6 +24,7 @@ use stdClass;
 
 class controlador_cob_pago extends _ctl_base {
 
+    public string $link_cob_pago_alta_bd = '';
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
 

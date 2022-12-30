@@ -24,6 +24,7 @@ use stdClass;
 
 class controlador_cob_deuda extends _ctl_base {
 
+    public string $link_cob_pago_alta_bd = '';
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
 
@@ -37,6 +38,7 @@ class controlador_cob_deuda extends _ctl_base {
         $datatables->columns['cob_deuda_id']['titulo'] = 'Id';
         $datatables->columns['cob_deuda_codigo']['titulo'] = 'Cod';
         $datatables->columns['cob_deuda_descripcion']['titulo'] = 'Deuda';
+        $datatables->columns['cob_deuda_n_pagos']['titulo'] = 'N Pagos';
         $datatables->columns['cob_deuda_monto']['titulo'] = 'Monto';
         $datatables->columns['cob_deuda_fecha_vencimiento']['titulo'] = 'Fecha de vencimiento';
 
@@ -52,6 +54,39 @@ class controlador_cob_deuda extends _ctl_base {
             datatables: $datatables, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Deuda';
+
+
+        $link_cob_pago_alta_bd = $this->obj_link->link_alta_bd(link: $link, seccion: 'cob_pago');
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al obtener link',data:  $link_cob_pago_alta_bd);
+            print_r($error);
+            exit;
+        }
+        $this->link_cob_pago_alta_bd = $link_cob_pago_alta_bd;
+
+    }
+
+    public function pagos(bool $header = true, bool $ws = false): array|string
+    {
+
+
+        $data_view = new stdClass();
+        $data_view->names = array('Id','Cod','Pago');
+        $data_view->keys_data = array('cob_pago_id', 'cob_pago_codigo','cob_pago_descripcion');
+        $data_view->key_actions = 'acciones';
+        $data_view->namespace_model = 'gamboamartin\\cobranza\\models';
+        $data_view->name_model_children = 'cob_pago';
+
+
+        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
+        if(errores::$error){
+            return $this->retorno_error(
+                mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);
+        }
+
+
+        return $contenido_table;
+
 
     }
 
