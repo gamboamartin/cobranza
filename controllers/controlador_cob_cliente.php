@@ -17,6 +17,9 @@ use gamboamartin\template\html;
 use html\cob_cliente_html;
 
 
+use html\cob_concepto_html;
+use html\cob_deuda_html;
+use html\cob_pago_html;
 use html\cob_tipo_cliente_html;
 use html\org_sucursal_html;
 use PDO;
@@ -24,6 +27,7 @@ use stdClass;
 
 class controlador_cob_cliente extends _ctl_base {
 
+    public string $link_cob_deuda_alta_bd = '';
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
 
@@ -58,6 +62,14 @@ class controlador_cob_cliente extends _ctl_base {
             datatables: $datatables, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Cliente';
+
+        $link_cob_deuda_alta_bd = $this->obj_link->link_alta_bd(link: $link, seccion: 'cob_deuda');
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al obtener link',data:  $link_cob_deuda_alta_bd);
+            print_r($error);
+            exit;
+        }
+        $this->link_cob_deuda_alta_bd = $link_cob_deuda_alta_bd;
 
     }
 
@@ -118,6 +130,67 @@ class controlador_cob_cliente extends _ctl_base {
 
 
         return $campos_view;
+    }
+
+    protected function inputs_children(stdClass $registro): stdClass|array
+    {
+        $select_cob_cliente_id = (new cob_cliente_html(html: $this->html_base))->select_cob_cliente_id(
+            cols:12,con_registros: true,id_selected:  -1,link:  $this->link);
+
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener select_cob_cliente_id',data:  $select_cob_cliente_id);
+        }
+
+
+
+        $cob_deuda_monto = (new cob_deuda_html(html: $this->html_base))->input_descripcion(
+            cols:12,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Monto');
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener cob_deuda_monto',data:  $cob_deuda_monto);
+        }
+
+        $cob_deuda_fecha_vencimiento = (new cob_deuda_html(html: $this->html_base))->input_descripcion(
+            cols:12,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Fecha vencimiento');
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener cob_deuda_fecha_vencimiento',data:  $cob_deuda_fecha_vencimiento);
+        }
+
+        $cob_concepto_id = (new cob_concepto_html(html: $this->html_base))->select_cob_concepto_id(
+            cols:12,con_registros: true,id_selected:  -1,link:  $this->link);
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener cob_concepto_id',data:  $cob_concepto_id);
+        }
+
+        $cob_cliente_id = (new cob_cliente_html(html: $this->html_base))->select_cob_cliente_id(
+            cols:12,con_registros: true,id_selected:  -1,link:  $this->link);
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener cob_cliente_id',data:  $cob_cliente_id);
+        }
+
+
+
+
+
+
+
+
+
+
+        $this->inputs = new stdClass();
+        $this->inputs->select = new stdClass();
+        $this->inputs->select->cob_cliente_id = $select_cob_cliente_id;
+        $this->inputs->cob_deuda_monto = $cob_deuda_monto;
+        $this->inputs->cob_deuda_fecha_vencimiento = $cob_deuda_fecha_vencimiento;
+        $this->inputs->cob_concepto_id = $cob_concepto_id;
+        $this->inputs->cob_cliente_id = $cob_cliente_id;
+
+
+        return $this->inputs;
     }
 
 
@@ -209,6 +282,31 @@ class controlador_cob_cliente extends _ctl_base {
 
 
         return $r_modifica;
+    }
+
+    public function deudas(bool $header = true, bool $ws = false): array|string
+    {
+
+
+        $data_view = new stdClass();
+        $data_view->names = array('Id','Cod','Deuda','Monto','Fecha de vencimiento','Concepto','Cliente');
+        $data_view->keys_data = array('cob_deuda_id', 'cob_deuda_codigo','cob_deuda_descripcion'
+        ,'cob_deuda_monto','cob_deuda_fecha_vencimiento','cob_concepto_id','cob_cliente_id');
+        $data_view->key_actions = 'acciones';
+        $data_view->namespace_model = 'gamboamartin\\cobranza\\models';
+        $data_view->name_model_children = 'cob_deuda';
+
+
+        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
+        if(errores::$error){
+            return $this->retorno_error(
+                mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);
+        }
+
+
+        return $contenido_table;
+
+
     }
 
 
