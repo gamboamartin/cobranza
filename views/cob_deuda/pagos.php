@@ -1,4 +1,4 @@
-<?php /** @var gamboamartin\acl\controllers\controlador_adm_menu $controlador  controlador en ejecucion */ ?>
+<?php /** @var gamboamartin\cobranza\controllers\controlador_cob_pago $controlador  controlador en ejecucion */ ?>
 <?php use config\views; ?>
 <main class="main section-color-primary">
     <div class="container">
@@ -13,9 +13,7 @@
                         <?php echo $controlador->inputs->select->cob_deuda_id; ?>
                         <?php echo $controlador->inputs->cob_pago_codigo; ?>
                         <?php echo $controlador->inputs->cob_pago_descripcion; ?>
-                        <?php echo $controlador->inputs->fecha_de_pago; ?>
-                        <?php echo $controlador->inputs->cob_deuda_id; ?>
-                        <?php echo $controlador->inputs->bn_cuenta_id; ?>
+                        <?php echo $controlador->inputs->cob_pago_fecha_de_pago; ?>
 
                         <?php echo $controlador->inputs->hidden_row_id; ?>
                         <?php echo $controlador->inputs->hidden_seccion_retorno; ?>

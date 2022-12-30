@@ -24,7 +24,6 @@ use stdClass;
 
 class controlador_cob_pago extends _ctl_base {
 
-    public string $link_cob_pago_alta_bd = '';
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
 
@@ -128,6 +127,7 @@ class controlador_cob_pago extends _ctl_base {
             return $this->errores->error(
                 mensaje: 'Error al obtener select_bn_tipo_cuenta_id',data:  $select_cob_deuda_id);
         }
+
 
         $select_bn_cuenta_id = (new bn_cuenta_html(html: $this->html_base))->select_bn_cuenta_id(
             cols:6,con_registros: true,id_selected:  -1,link:  $this->link);

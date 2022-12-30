@@ -2,10 +2,9 @@
 namespace html;
 
 use gamboamartin\cobranza\controllers\controlador_cob_concepto;
-use gamboamartin\cobranza\models\cob_deuda;
+use gamboamartin\cobranza\models\cob_concepto;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
-use models\cob_concepto;
 use PDO;
 use stdClass;
 

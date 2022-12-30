@@ -14,6 +14,7 @@ use gamboamartin\system\_ctl_base;
 use gamboamartin\system\links_menu;
 
 use gamboamartin\template\html;
+
 use html\cob_cliente_html;
 use html\cob_concepto_html;
 use html\cob_deuda_html;
@@ -152,6 +153,31 @@ class controlador_cob_deuda extends _ctl_base {
                 mensaje: 'Error al obtener cob_pago_descripcion',data:  $cob_pago_descripcion);
         }
 
+        $cob_pago_codigo = (new cob_pago_html(html: $this->html_base))->input_descripcion(
+            cols:12,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Cod');
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener cob_pago_codigo',data:  $cob_pago_codigo);
+        }
+
+        $cob_deuda_id = (new cob_deuda_html(html: $this->html_base))->select_cob_deuda_id(
+            cols:12,con_registros: true,id_selected:  -1,link:  $this->link);
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener cob_pago_codigo',data:  $cob_deuda_id);
+        }
+
+        $cob_pago_fecha_de_pago = (new cob_pago_html(html: $this->html_base))->input_descripcion(
+            cols:12,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Fecha de pago');
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener cob_pago_fecha_de_pago',data:  $cob_pago_fecha_de_pago);
+        }
+
+ 
+
+
+
 
 
         $this->inputs = new stdClass();
@@ -159,6 +185,9 @@ class controlador_cob_deuda extends _ctl_base {
         $this->inputs->select->cob_cliente_id = $select_cob_cliente_id;
         $this->inputs->select->cob_concepto_id = $select_cob_concepto_id;
         $this->inputs->cob_pago_descripcion = $cob_pago_descripcion;
+        $this->inputs->cob_pago_codigo = $cob_pago_codigo;
+        $this->inputs->select->cob_deuda_id = $cob_deuda_id;
+        $this->inputs->cob_pago_fecha_de_pago = $cob_pago_fecha_de_pago;
 
 
         return $this->inputs;
@@ -229,8 +258,8 @@ class controlador_cob_deuda extends _ctl_base {
 
         $data_view = new stdClass();
         $data_view->names = array('Id','Cod','Pago','Fecha de pago','Deuda','Cuenta');
-        $data_view->keys_data = array('cob_pago_id', 'cob_pago_codigo','cob_pago_fecha_de_pago'
-        ,'fecha_de_pago','cob_deuda_id','bn_cuenta_id');
+        $data_view->keys_data = array('cob_pago_id', 'cob_pago_codigo','cob_pago_descripcion'
+        ,'cob_pago_fecha_de_pago','cob_deuda_id','bn_cuenta_id');
         $data_view->key_actions = 'acciones';
         $data_view->namespace_model = 'gamboamartin\\cobranza\\models';
         $data_view->name_model_children = 'cob_pago';
