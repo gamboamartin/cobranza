@@ -78,7 +78,7 @@ class controlador_cob_pago extends _ctl_base {
             return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
         }
 
-        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cat_sat_forma_de_pago_id',
+        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cat_sat_forma_pago_id',
             keys_selects: $keys_selects, id_selected: -1, label: 'Forma de pago');
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
@@ -121,6 +121,7 @@ class controlador_cob_pago extends _ctl_base {
         $init_data = array();
         $init_data['cob_deuda'] = "gamboamartin\\cobranza";
         $init_data['bn_cuenta'] = "gamboamartin\\banco";
+        $init_data['cat_sat_forma_pago'] = "gamboamartin\\cat_sat";
         $campos_view = $this->campos_view_base(init_data: $init_data,keys:  $keys);
 
         if(errores::$error){
@@ -150,19 +151,19 @@ class controlador_cob_pago extends _ctl_base {
                 mensaje: 'Error al obtener select_org_sucursal_id',data:  $select_bn_cuenta_id);
         }
 
-        $select_cat_sat_forma_de_pago_id = (new cat_sat_forma_pago_html(html: $this->html_base))->select_cat_sat_forma_pago_id(
+        $select_cat_sat_forma_pago_id = (new cat_sat_forma_pago_html(html: $this->html_base))->select_cat_sat_forma_pago_id(
             cols:6,con_registros: true,id_selected:  -1,link:  $this->link);
 
         if(errores::$error){
             return $this->errores->error(
-                mensaje: 'Error al obtener select_cat_sat_forma_de_pago_id',data:  $select_cat_sat_forma_de_pago_id);
+                mensaje: 'Error al obtener select_cat_sat_forma_pago_id',data:  $select_cat_sat_forma_pago_id);
         }
 
         $this->inputs = new stdClass();
         $this->inputs->select = new stdClass();
         $this->inputs->select->cob_deuda_id = $select_cob_deuda_id;
         $this->inputs->select->bn_cuenta_id = $select_bn_cuenta_id;
-        $this->inputs->select->cat_sat_forma_de_pago_id = $select_cat_sat_forma_de_pago_id;
+        $this->inputs->select->cat_sat_forma_pago_id = $select_cat_sat_forma_pago_id;
 
 
         return $this->inputs;
@@ -217,8 +218,8 @@ class controlador_cob_pago extends _ctl_base {
             return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
         }
 
-        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cat_sat_forma_de_pago_id',
-            keys_selects: $keys_selects, id_selected: $this->registro['cat_sat_forma_de_pago_id'], label: 'Forma de pago');
+        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cat_sat_forma_pago_id',
+            keys_selects: $keys_selects, id_selected: $this->registro['cat_sat_forma_pago_id'], label: 'Forma de pago');
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
         }
