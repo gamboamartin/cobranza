@@ -38,12 +38,14 @@ class controlador_cob_pago extends _ctl_base {
         $datatables->columns['cob_pago_codigo']['titulo'] = 'Cod';
         $datatables->columns['cob_pago_descripcion']['titulo'] = 'Pago';
         $datatables->columns['cob_pago_fecha_de_pago']['titulo'] = 'Fecha de Pago';
+        $datatables->columns['cob_pago_monto']['titulo'] = 'Monto';
 
         $datatables->filtro = array();
         $datatables->filtro[] = 'cob_pago.id';
         $datatables->filtro[] = 'cob_pago.codigo';
         $datatables->filtro[] = 'cob_pago.descripcion';
         $datatables->filtro[] = 'cob_pago.fecha_de_pago';
+        $datatables->filtro[] = 'cob_pago.monto';
 
 
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link,
@@ -86,6 +88,9 @@ class controlador_cob_pago extends _ctl_base {
         $keys_selects['fecha de pago'] = new stdClass();
         $keys_selects['fecha de pago']->cols = 12;
 
+        $keys_selects['Monto'] = new stdClass();
+        $keys_selects['Monto']->cols = 6;
+
 
 
         $inputs = $this->inputs(keys_selects: $keys_selects);
@@ -102,7 +107,7 @@ class controlador_cob_pago extends _ctl_base {
     protected function campos_view(): array
     {
         $keys = new stdClass();
-        $keys->inputs = array('codigo','descripcion');
+        $keys->inputs = array('codigo','descripcion','monto');
         $keys->selects = array();
         $keys->fechas = array('fecha_de_pago');
 
@@ -166,6 +171,11 @@ class controlador_cob_pago extends _ctl_base {
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
 
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 12,key: 'monto', keys_selects:$keys_selects, place_holder: 'Monto');
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
+        }
+
         return $keys_selects;
     }
 
@@ -200,6 +210,9 @@ class controlador_cob_pago extends _ctl_base {
 
         $keys_selects['Fecha de Pago'] = new stdClass();
         $keys_selects['Fecha de Pago']->cols = 6;
+
+        $keys_selects['Monto'] = new stdClass();
+        $keys_selects['Monto']->cols = 6;
 
         $base = $this->base_upd(keys_selects: $keys_selects, not_actions: array(__FUNCTION__), params: array(),params_ajustados: array());
         if(errores::$error){

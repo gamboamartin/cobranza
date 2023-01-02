@@ -4,6 +4,7 @@
 <?php echo $controlador->inputs->codigo; ?>
 <?php echo $controlador->inputs->descripcion; ?>
 <?php echo $controlador->inputs->fecha_de_pago; ?>
+<?php echo $controlador->inputs->monto; ?>
 
 <?php echo $controlador->inputs->cob_deuda_id; ?>
 <?php echo $controlador->inputs->bn_cuenta_id; ?>
