@@ -151,11 +151,11 @@ class controlador_cob_cliente extends _ctl_base {
                 mensaje: 'Error al obtener cob_deuda_monto',data:  $cob_deuda_monto);
         }
 
-        $cob_deuda_fecha_vencimiento = (new cob_deuda_html(html: $this->html_base))->input_descripcion(
+        $fecha_vencimiento = (new cob_deuda_html(html: $this->html_base))->input_descripcion(
             cols:12,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Fecha de vencimiento');
         if(errores::$error){
             return $this->errores->error(
-                mensaje: 'Error al obtener cob_deuda_fecha_vencimiento',data:  $cob_deuda_fecha_vencimiento);
+                mensaje: 'Error al obtener cob_deuda_fecha_vencimiento',data:  $fecha_vencimiento);
         }
 
         $cob_concepto_id = (new cob_concepto_html(html: $this->html_base))->select_cob_concepto_id(
@@ -165,12 +165,7 @@ class controlador_cob_cliente extends _ctl_base {
                 mensaje: 'Error al obtener cob_concepto_id',data:  $cob_concepto_id);
         }
 
-        $cob_cliente_id = (new cob_cliente_html(html: $this->html_base))->select_cob_cliente_id(
-            cols:12,con_registros: true,id_selected:  -1,link:  $this->link);
-        if(errores::$error){
-            return $this->errores->error(
-                mensaje: 'Error al obtener cob_cliente_id',data:  $cob_cliente_id);
-        }
+
 
 
 
@@ -185,9 +180,9 @@ class controlador_cob_cliente extends _ctl_base {
         $this->inputs->select = new stdClass();
         $this->inputs->select->cob_cliente_id = $select_cob_cliente_id;
         $this->inputs->cob_deuda_monto = $cob_deuda_monto;
-        $this->inputs->cob_deuda_fecha_vencimiento = $cob_deuda_fecha_vencimiento;
+        $this->inputs->fecha_vencimiento = $fecha_vencimiento;
         $this->inputs->cob_concepto_id = $cob_concepto_id;
-        $this->inputs->cob_cliente_id = $cob_cliente_id;
+
 
 
         return $this->inputs;

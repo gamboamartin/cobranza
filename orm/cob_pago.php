@@ -7,7 +7,7 @@ class cob_pago extends _modelo_parent {
 
     public function __construct(PDO $link){
         $tabla = 'cob_pago';
-        $columnas = array($tabla=>false,'cob_deuda'=>$tabla,'bn_cuenta'=>$tabla);
+        $columnas = array($tabla=>false,'cob_deuda'=>$tabla,'bn_cuenta'=>$tabla,'cat_sat_forma_de_pago'=>$tabla);
         $campos_obligatorios[] = 'descripcion';
         $campos_obligatorios[] = 'descripcion_select';
 

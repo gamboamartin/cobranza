@@ -57,7 +57,7 @@ class cob_deuda extends _modelo_parent {
         return $r_alta_bd;
     }
 
-    /*public function calcula_saldo() {
+    public function calcula_saldo() {
         $deuda = $this->registro['cob_deuda_id'];
         $deuda_monto = "(SELECT SUM(monto) FROM cob_deuda WHERE id = $deuda)";
         $pago_monto = "(SELECT SUM(monto) FROM cob_pago WHERE cob_deuda_id = $deuda)";
@@ -66,7 +66,7 @@ class cob_deuda extends _modelo_parent {
         return $saldo;
 
 
-    }*/
+    }
 
 
 }

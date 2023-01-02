@@ -97,6 +97,9 @@ class controlador_cob_deuda extends _ctl_base {
         $keys_selects['descripcion'] = new stdClass();
         $keys_selects['descripcion']->cols = 6;
 
+        $keys_selects['fecha_vencimiento'] = new stdClass();
+        $keys_selects['fecha_vencimiento']->cols = 6;
+
 
         $inputs = $this->inputs(keys_selects: $keys_selects);
         if(errores::$error){
