@@ -102,8 +102,9 @@ class controlador_cob_pago extends _ctl_base {
     protected function campos_view(): array
     {
         $keys = new stdClass();
-        $keys->inputs = array('codigo','descripcion','fecha_de_pago');
+        $keys->inputs = array('codigo','descripcion');
         $keys->selects = array();
+        $keys->fechas = array('fecha_de_pago');
 
         $init_data = array();
         $init_data['cob_deuda'] = "gamboamartin\\cobranza";
