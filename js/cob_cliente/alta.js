@@ -1,9 +1,11 @@
+let text_rfc = $("#rfc");
 let text_razon_social = $("#razon_social");
 let text_cliente = $("#descripcion");
 let text_nombre = $("#nombre");
 let text_ap = $("#ap");
 let text_am = $("#am");
 
+text_rfc.val('RFC123456RFC');
 
 text_nombre.change(function() {
     text_razon_social.val(text_nombre.val() + ' ' + text_ap.val() + ' ' + text_am.val());

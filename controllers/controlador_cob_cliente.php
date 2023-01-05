@@ -116,7 +116,7 @@ class controlador_cob_cliente extends _ctl_base {
     protected function campos_view(): array
     {
         $keys = new stdClass();
-        $keys->inputs = array('codigo','descripcion','nombre','ap','am','razon_social','rfc','curp');
+        $keys->inputs = array('codigo', 'codigo_bis','descripcion','nombre','ap','am','razon_social','rfc','curp');
         $keys->selects = array();
 
         $init_data = array();
@@ -198,7 +198,12 @@ class controlador_cob_cliente extends _ctl_base {
             return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
         }
 
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'cliente');
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6, key: 'codigo_bis', keys_selects: $keys_selects, place_holder: 'Cod Bis');
+        if (errores::$error) {
+            return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
+        }
+
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Cliente');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
@@ -223,7 +228,7 @@ class controlador_cob_cliente extends _ctl_base {
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
 
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'rfc', keys_selects:$keys_selects, place_holder: 'RFC');
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 12,key: 'rfc', keys_selects:$keys_selects, place_holder: 'RFC');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
@@ -263,8 +268,7 @@ class controlador_cob_cliente extends _ctl_base {
         $keys_selects['descripcion'] = new stdClass();
         $keys_selects['descripcion']->cols = 6;
 
-        $keys_selects['codigo'] = new stdClass();
-        $keys_selects['codigo']->disabled = true;
+
 
 
 
