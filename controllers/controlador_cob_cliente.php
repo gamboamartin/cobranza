@@ -205,7 +205,7 @@ class controlador_cob_cliente extends _ctl_base {
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
 
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'am', keys_selects:$keys_selects, place_holder: 'AM');
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'am', keys_selects:$keys_selects, place_holder: 'AM', required: false);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
