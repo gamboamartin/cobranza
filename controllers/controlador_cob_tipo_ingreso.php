@@ -64,7 +64,7 @@ class controlador_cob_tipo_ingreso extends _ctl_parent_sin_codigo {
         }
 
         $cob_tipo_concepto_codigo = (new cob_tipo_concepto_html(html: $this->html_base))->input_codigo(
-            cols: 6,row_upd:  new stdClass(), value_vacio: false);
+            cols: 12,row_upd:  new stdClass(), value_vacio: false);
         if(errores::$error){
             return $this->errores->error(
                 mensaje: 'Error al obtener cob_tipo_concepto_codigo',data:  $cob_tipo_concepto_codigo);
