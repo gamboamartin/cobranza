@@ -143,8 +143,8 @@ class controlador_cob_cliente extends _ctl_base {
         }
 
 
-        $cob_deuda_monto = (new cob_deuda_html(html: $this->html_base))->input_descripcion(
-            cols:12,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Monto');
+        $cob_deuda_monto = (new cob_deuda_html(html: $this->html_base))->input_monto(
+            cols:12,row_upd:  new stdClass(),value_vacio:  false);
         if(errores::$error){
             return $this->errores->error(
                 mensaje: 'Error al obtener cob_deuda_monto',data:  $cob_deuda_monto);
