@@ -16,7 +16,13 @@ class cob_deuda extends _modelo_parent {
         $tipo_campos['codigos'] = 'cod_1_letras_mayusc';
 
         $columnas_extra['cob_deuda_n_pagos'] = /** @lang sql */
-            "(SELECT COUNT(*) FROM cob_pago WHERE cob_pago.cob_deuda_id = cob_pago.id)";
+            "(SELECT COUNT(*) FROM cob_pago WHERE cob_pago.cob_deuda_id = cob_deuda.id)";
+
+        $columnas_extra['cob_deuda_pagado'] = /** @lang sql */
+            "IFNULL((SELECT SUM(cob_pago.monto) FROM cob_pago WHERE cob_pago.cob_deuda_id = cob_deuda.id),0)";
+
+        $columnas_extra['cob_deuda_saldo'] = /** @lang sql */
+            "IFNULL((cob_deuda.monto - $columnas_extra[cob_deuda_pagado]),0)";
 
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
@@ -57,16 +63,6 @@ class cob_deuda extends _modelo_parent {
         return $r_alta_bd;
     }
 
-    public function calcula_saldo() {
-        $deuda = $this->registro['cob_deuda_id'];
-        $deuda_monto = "(SELECT SUM(monto) FROM cob_deuda WHERE id = $deuda)";
-        $pago_monto = "(SELECT SUM(monto) FROM cob_pago WHERE cob_deuda_id = $deuda)";
-        $saldo = $deuda_monto - $pago_monto;
-
-        return $saldo;
-
-
-    }
 
 
 }
