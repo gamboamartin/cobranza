@@ -91,7 +91,7 @@ class controlador_cob_cliente extends _ctl_base {
 
 
         $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'org_sucursal_id',
-            keys_selects: $keys_selects, id_selected: -1, label: 'Sucursal');
+            keys_selects: $keys_selects, id_selected: -1, label: 'Empresa');
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
         }
@@ -246,7 +246,7 @@ class controlador_cob_cliente extends _ctl_base {
         }
 
         $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'org_sucursal_id',
-            keys_selects: $keys_selects, id_selected: $this->registro['org_sucursal_id'], label: 'Sucursal');
+            keys_selects: $keys_selects, id_selected: $this->registro['org_sucursal_id'], label: 'Empresa');
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
         }
