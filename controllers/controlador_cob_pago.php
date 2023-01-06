@@ -37,7 +37,7 @@ class controlador_cob_pago extends _ctl_base {
         $datatables->columns = array();
         $datatables->columns['cob_pago_id']['titulo'] = 'Id';
         $datatables->columns['cob_pago_codigo']['titulo'] = 'Cod';
-        $datatables->columns['cob_pago_descripcion']['titulo'] = 'Pago';
+        $datatables->columns['cob_pago_descripcion']['titulo'] = 'Observaciones';
         $datatables->columns['cob_pago_fecha_de_pago']['titulo'] = 'Fecha de Pago';
         $datatables->columns['cob_pago_monto']['titulo'] = 'Monto';
 
@@ -178,7 +178,7 @@ class controlador_cob_pago extends _ctl_base {
             return $this->errores->error(mensaje: 'Error al maquetar key_selects', data: $keys_selects);
         }
 
-        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Pago');
+        $keys_selects = (new \base\controller\init())->key_select_txt(cols: 6,key: 'descripcion', keys_selects:$keys_selects, place_holder: 'Observaciones');
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
