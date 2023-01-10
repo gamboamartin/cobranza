@@ -10,6 +10,9 @@
                         <?php include (new views())->ruta_templates."head/subtitulo.php"; ?>
                         <?php include (new views())->ruta_templates."mensajes.php"; ?>
 
+                        <?php echo $controlador->inputs->select->cob_tipo_cliente_id; ?>
+                        <?php echo $controlador->inputs->select->org_sucursal_id; ?>
+
                         <?php echo $controlador->inputs->cob_cliente_codigo; ?>
                         <?php echo $controlador->inputs->cob_cliente_codigo_bis; ?>
                         <?php echo $controlador->inputs->cob_cliente_nombre; ?>
@@ -20,8 +23,8 @@
                         <?php echo $controlador->inputs->cob_cliente_razon_social; ?>
                         <?php echo $controlador->inputs->cob_cliente_rfc; ?>
 
-                        <?php echo $controlador->inputs->select->org_sucursal_id; ?>
-                        <?php echo $controlador->inputs->select->cob_tipo_cliente_id; ?>
+
+
 
                         <?php echo $controlador->inputs->hidden_row_id; ?>
                         <?php echo $controlador->inputs->hidden_seccion_retorno; ?>
