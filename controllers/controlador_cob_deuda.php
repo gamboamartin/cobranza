@@ -79,6 +79,8 @@ class controlador_cob_deuda extends _ctl_base {
                 mensaje: 'Error al inicializar alta',data:  $r_alta, header: $header,ws:  $ws);
         }
 
+        $this->row_upd->fecha_vencimiento = date('Y-m-d');
+
 
         $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cob_cliente_id',
             keys_selects: array(), id_selected: -1, label: 'Cliente');
@@ -179,7 +181,7 @@ class controlador_cob_deuda extends _ctl_base {
         }
 
         $cob_pago_fecha_de_pago = (new cob_pago_html(html: $this->html_base))->input_descripcion(
-            cols:12,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Fecha de pago');
+            cols:12,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Fecha de pago',);
         if(errores::$error){
             return $this->errores->error(
                 mensaje: 'Error al obtener cob_pago_fecha_de_pago',data:  $cob_pago_fecha_de_pago);
