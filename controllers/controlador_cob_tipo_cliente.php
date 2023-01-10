@@ -17,7 +17,7 @@ use html\cob_cliente_html;
 use html\cob_tipo_cliente_html;
 
 
-
+use html\org_sucursal_html;
 use PDO;
 use stdClass;
 
@@ -85,19 +85,19 @@ class controlador_cob_tipo_cliente extends _ctl_parent_sin_codigo {
 
     protected function inputs_children(stdClass $registro): stdClass|array
     {
-        $select_cob_tipo_cliente_id = (new cob_tipo_cliente_html(html: $this->html_base))->select_cob_tipo_cliente_id(
-            cols:12,con_registros: true,id_selected:  $registro->cob_tipo_cliente_id,link:  $this->link);
-
-        if(errores::$error){
-            return $this->errores->error(
-                mensaje: 'Error al obtener select_adm_menu_id',data:  $select_cob_tipo_cliente_id);
-        }
 
         $cob_cliente_codigo = (new cob_cliente_html(html: $this->html_base))->input_codigo(
             cols:6,row_upd:  new stdClass(),value_vacio:  false);
         if(errores::$error){
             return $this->errores->error(
                 mensaje: 'Error al obtener cob_cliente_codigo',data:  $cob_cliente_codigo);
+        }
+
+        $cob_cliente_codigo_bis = (new cob_cliente_html(html: $this->html_base))->input_descripcion(
+            cols:6,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Cod Bis');
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener cob_cliente_codigo_bis',data:  $cob_cliente_codigo_bis);
         }
 
         $cob_cliente_descripcion = (new cob_cliente_html(html: $this->html_base))->input_descripcion(
@@ -107,12 +107,81 @@ class controlador_cob_tipo_cliente extends _ctl_parent_sin_codigo {
                 mensaje: 'Error al obtener cob_cliente_descripcion',data:  $cob_cliente_descripcion);
         }
 
+        $cob_cliente_nombre = (new cob_cliente_html(html: $this->html_base))->input_descripcion(
+            cols:6,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Nombre');
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener cob_cliente_nombre',data:  $cob_cliente_nombre);
+        }
+
+        $cob_cliente_ap = (new cob_cliente_html(html: $this->html_base))->input_descripcion(
+            cols:6,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'AP');
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener cob_cliente_ap',data:  $cob_cliente_ap);
+        }
+
+        $cob_cliente_am = (new cob_cliente_html(html: $this->html_base))->input_descripcion(
+            cols:6,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'AM');
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener cob_cliente_am',data:  $cob_cliente_am);
+        }
+
+        $cob_cliente_curp = (new cob_cliente_html(html: $this->html_base))->input_descripcion(
+            cols:6,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Curp');
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener cob_cliente_curp',data:  $cob_cliente_curp);
+        }
+
+
+        $cob_cliente_razon_social = (new cob_cliente_html(html: $this->html_base))->input_descripcion(
+            cols:6,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Razon social');
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener cob_cliente_razon_social',data:  $cob_cliente_razon_social);
+        }
+
+        $cob_cliente_rfc = (new cob_cliente_html(html: $this->html_base))->input_descripcion(
+            cols:6,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'RFC');
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener cob_cliente_rfc',data:  $cob_cliente_rfc);
+        }
+
+        $select_cob_tipo_cliente_id = (new cob_tipo_cliente_html(html: $this->html_base))->select_cob_tipo_cliente_id(
+            cols:12,con_registros: true,id_selected:  $registro->cob_tipo_cliente_id,link:  $this->link);
+
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener select_adm_menu_id',data:  $select_cob_tipo_cliente_id);
+        }
+
+        $select_org_sucursal_id = (new org_sucursal_html(html: $this->html_base))->select_org_sucursal_id(
+            cols:12,con_registros: true,id_selected:  $registro->org_sucursal_id,link:  $this->link);
+
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener select_org_sucursal_id',data:  $select_org_sucursal_id);
+        }
+
+
+
 
         $this->inputs = new stdClass();
         $this->inputs->select = new stdClass();
         $this->inputs->select->cob_tipo_cliente_id = $select_cob_tipo_cliente_id;
+        $this->inputs->select->org_sucursal_id = $select_org_sucursal_id;
         $this->inputs->cob_cliente_codigo = $cob_cliente_codigo;
+        $this->inputs->cob_cliente_codigo_bis = $cob_cliente_codigo_bis;
+        $this->inputs->cob_cliente_nombre = $cob_cliente_nombre;
+        $this->inputs->cob_cliente_ap = $cob_cliente_ap;
+        $this->inputs->cob_cliente_am = $cob_cliente_am;
+        $this->inputs->cob_cliente_curp = $cob_cliente_curp;
         $this->inputs->cob_cliente_descripcion = $cob_cliente_descripcion;
+        $this->inputs->cob_cliente_razon_social = $cob_cliente_razon_social;
+        $this->inputs->cob_cliente_rfc = $cob_cliente_rfc;
 
         return $this->inputs;
     }
