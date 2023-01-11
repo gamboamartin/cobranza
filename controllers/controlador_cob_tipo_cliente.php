@@ -10,6 +10,7 @@ namespace gamboamartin\cobranza\controllers;
 
 use gamboamartin\cobranza\models\cob_tipo_cliente;
 use gamboamartin\errores\errores;
+use gamboamartin\organigrama\models\org_sucursal;
 use gamboamartin\system\_ctl_parent_sin_codigo;
 use gamboamartin\system\links_menu;
 use gamboamartin\template\html;
@@ -59,6 +60,7 @@ class controlador_cob_tipo_cliente extends _ctl_parent_sin_codigo {
 
     }
 
+
     public function clientes(bool $header = true, bool $ws = false): array|string
     {
 
@@ -82,6 +84,7 @@ class controlador_cob_tipo_cliente extends _ctl_parent_sin_codigo {
 
 
     }
+
 
     protected function inputs_children(stdClass $registro): stdClass|array
     {
@@ -159,12 +162,14 @@ class controlador_cob_tipo_cliente extends _ctl_parent_sin_codigo {
         }
 
         $select_org_sucursal_id = (new org_sucursal_html(html: $this->html_base))->select_org_sucursal_id(
-            cols:12,con_registros: true,id_selected:  $registro->org_sucursal_id,link:  $this->link);
+            cols:12,con_registros: true,id_selected:  -1,link:  $this->link,label: 'Empresa');
 
         if(errores::$error){
             return $this->errores->error(
-                mensaje: 'Error al obtener select_org_sucursal_id',data:  $select_org_sucursal_id);
+                mensaje: 'Error al obtener select_adm_menu_id',data:  $select_org_sucursal_id);
         }
+
+
 
 
 
@@ -199,6 +204,8 @@ class controlador_cob_tipo_cliente extends _ctl_parent_sin_codigo {
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects);
         }
+
+
 
         return $keys_selects;
     }
