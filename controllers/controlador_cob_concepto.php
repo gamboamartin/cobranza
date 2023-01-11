@@ -25,6 +25,7 @@ use stdClass;
 
 class controlador_cob_concepto extends _ctl_base {
 
+    public string $link_cob_deuda_alta_bd = '';
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
 
@@ -38,6 +39,7 @@ class controlador_cob_concepto extends _ctl_base {
         $datatables->columns['cob_concepto_id']['titulo'] = 'Id';
         $datatables->columns['cob_concepto_codigo']['titulo'] = 'Cod';
         $datatables->columns['cob_concepto_descripcion']['titulo'] = 'Concepto';
+        $datatables->columns['cob_concepto_n_deudas']['titulo'] = 'N Deudas';
         $datatables->columns['cob_tipo_concepto_descripcion']['titulo'] = 'Tipo Concepto';
         $datatables->columns['cob_tipo_ingreso_descripcion']['titulo'] = 'Tipo Ingreso';
 
@@ -53,6 +55,16 @@ class controlador_cob_concepto extends _ctl_base {
             datatables: $datatables, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Concepto';
+
+        $link_cob_deuda_alta_bd = $this->obj_link->link_alta_bd(link: $link, seccion: 'cob_deuda');
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al obtener link',data:  $link_cob_deuda_alta_bd);
+            print_r($error);
+            exit;
+        }
+        $this->link_cob_deuda_alta_bd = $link_cob_deuda_alta_bd;
+
+
 
     }
 

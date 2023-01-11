@@ -41,6 +41,7 @@ class controlador_cob_cliente extends _ctl_base {
         $datatables->columns['cob_cliente_id']['titulo'] = 'Id';
         $datatables->columns['cob_cliente_codigo']['titulo'] = 'Cod';
         $datatables->columns['cob_cliente_descripcion']['titulo'] = 'Cliente';
+        $datatables->columns['cob_cliente_n_deudas']['titulo'] = 'N Deudas';
         $datatables->columns['cob_cliente_nombre']['titulo'] = 'Nombre';
         $datatables->columns['cob_cliente_ap']['titulo'] = 'AP';
         $datatables->columns['cob_cliente_am']['titulo'] = 'AM';
