@@ -132,7 +132,7 @@ class controlador_cob_concepto extends _ctl_base {
                 mensaje: 'Error al obtener select_cob_tipo_concepto_id',data:  $select_cob_tipo_concepto_id);
         }
         $select_cob_cliente_id = (new cob_cliente_html(html: $this->html_base))->select_cob_cliente_id(
-            cols:12,con_registros: true,id_selected:  -1,link:  $this->link, disabled: true);
+            cols:12,con_registros: true,id_selected:  -1,link:  $this->link);
 
         if(errores::$error){
             return $this->errores->error(
