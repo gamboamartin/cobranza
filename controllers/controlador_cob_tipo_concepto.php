@@ -8,6 +8,8 @@
  */
 namespace gamboamartin\cobranza\controllers;
 
+use gamboamartin\cobranza\html\cob_concepto_html;
+use gamboamartin\cobranza\html\cob_tipo_concepto_html;
 use gamboamartin\cobranza\models\cob_tipo_concepto;
 use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_base;
@@ -16,9 +18,6 @@ use gamboamartin\system\links_menu;
 use gamboamartin\template\html;
 
 
-use html\cob_concepto_html;
-use html\cob_tipo_concepto_html;
-use html\cob_tipo_ingreso_html;
 use PDO;
 use stdClass;
 
@@ -73,7 +72,7 @@ public string $link_cob_concepto_alta_bd = '';
         $data_view->name_model_children = 'cob_concepto';
 
 
-        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
+        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__, not_actions: $this->not_actions);
         if(errores::$error){
             return $this->retorno_error(
                 mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);
@@ -215,7 +214,7 @@ public string $link_cob_concepto_alta_bd = '';
         $keys_selects['codigo']->disabled = true;
 
 
-        $base = $this->base_upd(keys_selects: $keys_selects, not_actions: array(__FUNCTION__), params: array(),params_ajustados: array());
+        $base = $this->base_upd(keys_selects: $keys_selects, params: array(),params_ajustados: array());
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al integrar base',data:  $base, header: $header,ws:  $ws);
         }

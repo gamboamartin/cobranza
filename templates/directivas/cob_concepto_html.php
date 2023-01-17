@@ -1,5 +1,5 @@
 <?php
-namespace html;
+namespace gamboamartin\cobranza\html;
 
 use gamboamartin\cobranza\controllers\controlador_cob_concepto;
 use gamboamartin\cobranza\models\cob_concepto;

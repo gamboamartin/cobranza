@@ -8,6 +8,8 @@
  */
 namespace gamboamartin\cobranza\controllers;
 
+use gamboamartin\cobranza\html\cob_deuda_html;
+use gamboamartin\cobranza\html\cob_pago_html;
 use gamboamartin\cobranza\models\cob_pago;
 use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_base;
@@ -15,11 +17,8 @@ use gamboamartin\system\links_menu;
 
 use gamboamartin\template\html;
 use html\cat_sat_forma_pago_html;
-use html\cob_pago_html;
-
 
 use html\bn_cuenta_html;
-use html\cob_deuda_html;
 use PDO;
 use stdClass;
 
@@ -237,7 +236,7 @@ class controlador_cob_pago extends _ctl_base {
         $keys_selects['Monto'] = new stdClass();
         $keys_selects['Monto']->cols = 6;
 
-        $base = $this->base_upd(keys_selects: $keys_selects, not_actions: array(__FUNCTION__), params: array(),params_ajustados: array());
+        $base = $this->base_upd(keys_selects: $keys_selects, params: array(),params_ajustados: array());
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al integrar base',data:  $base, header: $header,ws:  $ws);
         }

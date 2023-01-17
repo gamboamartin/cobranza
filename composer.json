@@ -17,7 +17,7 @@
           "config\\": "config/",
           "tests\\": "tests/",
           "links\\": "links/",
-          "html\\": "templates/directivas/"
+          "gamboamartin\\cobranza\\html\\": "templates/directivas/"
 
         }
     },

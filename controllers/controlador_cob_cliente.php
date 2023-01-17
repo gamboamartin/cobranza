@@ -8,20 +8,15 @@
  */
 namespace gamboamartin\cobranza\controllers;
 
+use gamboamartin\cobranza\html\cob_cliente_html;
+use gamboamartin\cobranza\html\cob_concepto_html;
+use gamboamartin\cobranza\html\cob_deuda_html;
 use gamboamartin\cobranza\models\cob_cliente;
 use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_base;
 use gamboamartin\system\links_menu;
 
 use gamboamartin\template\html;
-use html\cob_cliente_html;
-
-
-use html\cob_concepto_html;
-use html\cob_deuda_html;
-use html\cob_pago_html;
-use html\cob_tipo_cliente_html;
-use html\org_sucursal_html;
 use PDO;
 use stdClass;
 
@@ -260,7 +255,7 @@ class controlador_cob_cliente extends _ctl_base {
 
 
 
-        $base = $this->base_upd(keys_selects: $keys_selects, not_actions: array(__FUNCTION__), params: array(),params_ajustados: array());
+        $base = $this->base_upd(keys_selects: $keys_selects, params: array(),params_ajustados: array());
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al integrar base',data:  $base, header: $header,ws:  $ws);
         }
@@ -284,7 +279,7 @@ class controlador_cob_cliente extends _ctl_base {
         $data_view->name_model_children = 'cob_deuda';
 
 
-        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__);
+        $contenido_table = $this->contenido_children(data_view: $data_view, next_accion: __FUNCTION__, not_actions: $this->not_actions);
         if(errores::$error){
             return $this->retorno_error(
                 mensaje: 'Error al obtener tbody',data:  $contenido_table, header: $header,ws:  $ws);

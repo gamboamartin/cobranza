@@ -1,8 +1,7 @@
 <?php
-namespace html;
+namespace gamboamartin\cobranza\html;
 
 use gamboamartin\cobranza\controllers\controlador_cob_caja;
-use gamboamartin\cobranza\controllers\controlador_cob_concepto;
 use gamboamartin\cobranza\models\cob_caja;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
