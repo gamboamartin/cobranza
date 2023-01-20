@@ -65,6 +65,7 @@ class controlador_cob_deuda extends _ctl_base {
         }
         $this->link_cob_pago_alta_bd = $link_cob_pago_alta_bd;
 
+        $this->lista_get_data = true;
     }
 
 

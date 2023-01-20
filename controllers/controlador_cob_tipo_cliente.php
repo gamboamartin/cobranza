@@ -56,6 +56,7 @@ class controlador_cob_tipo_cliente extends _ctl_parent_sin_codigo {
         }
         $this->link_cob_cliente_alta_bd = $link_cob_cliente_alta_bd;
 
+        $this->lista_get_data = true;
     }
 
 

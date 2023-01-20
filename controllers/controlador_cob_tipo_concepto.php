@@ -58,6 +58,7 @@ public string $link_cob_concepto_alta_bd = '';
         }
         $this->link_cob_concepto_alta_bd = $link_cob_concepto_alta_bd;
 
+        $this->lista_get_data = true;
     }
 
     public function conceptos(bool $header = true, bool $ws = false): array|string

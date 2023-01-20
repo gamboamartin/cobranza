@@ -55,6 +55,7 @@ class controlador_cob_caja extends _ctl_base {
 
         $this->titulo_lista = 'Caja';
 
+        $this->lista_get_data = true;
     }
 
     public function alta(bool $header, bool $ws = false): array|string

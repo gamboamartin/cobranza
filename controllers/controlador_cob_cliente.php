@@ -67,6 +67,7 @@ class controlador_cob_cliente extends _ctl_base {
         }
         $this->link_cob_deuda_alta_bd = $link_cob_deuda_alta_bd;
 
+        $this->lista_get_data = true;
     }
 
     public function alta(bool $header, bool $ws = false): array|string

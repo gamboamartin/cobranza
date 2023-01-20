@@ -53,6 +53,7 @@ class controlador_cob_pago extends _ctl_base {
 
         $this->titulo_lista = 'Pago';
 
+        $this->lista_get_data = true;
     }
 
     public function alta(bool $header, bool $ws = false): array|string
