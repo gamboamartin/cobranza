@@ -67,6 +67,7 @@ class controlador_cob_pago extends _ctl_base {
                 mensaje: 'Error al inicializar alta',data:  $r_alta, header: $header,ws:  $ws);
         }
 
+        $this->row_upd->fecha_de_pago = date('Y-m-d');
 
         $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cob_deuda_id',
             keys_selects: array(), id_selected: -1, label: 'Deuda');
@@ -238,6 +239,12 @@ class controlador_cob_pago extends _ctl_base {
 
         $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cat_sat_forma_pago_id',
             keys_selects: $keys_selects, id_selected: $this->registro['cat_sat_forma_pago_id'], label: 'Forma de pago');
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
+        }
+
+        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cob_caja_id',
+            keys_selects: $keys_selects, id_selected: $this->registro['cob_caja_id'], label: 'Caja');
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
         }
