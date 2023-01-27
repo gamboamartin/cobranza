@@ -8,8 +8,10 @@
  */
 namespace gamboamartin\cobranza\controllers;
 
+use gamboamartin\cobranza\html\cob_caja_html;
 use gamboamartin\cobranza\html\cob_deuda_html;
 use gamboamartin\cobranza\html\cob_pago_html;
+use gamboamartin\cobranza\models\cob_caja;
 use gamboamartin\cobranza\models\cob_pago;
 use gamboamartin\errores\errores;
 use gamboamartin\system\_ctl_base;
@@ -84,6 +86,12 @@ class controlador_cob_pago extends _ctl_base {
             return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
         }
 
+        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'cob_caja_id',
+            keys_selects: $keys_selects, id_selected: -1, label: 'Caja');
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
+        }
+
 
 
 
@@ -122,6 +130,7 @@ class controlador_cob_pago extends _ctl_base {
         $init_data['cob_deuda'] = "gamboamartin\\cobranza";
         $init_data['bn_cuenta'] = "gamboamartin\\banco";
         $init_data['cat_sat_forma_pago'] = "gamboamartin\\cat_sat";
+        $init_data['cob_caja'] = "gamboamartin\\cobranza";
         $campos_view = $this->campos_view_base(init_data: $init_data,keys:  $keys);
 
         if(errores::$error){
@@ -159,11 +168,20 @@ class controlador_cob_pago extends _ctl_base {
                 mensaje: 'Error al obtener select_cat_sat_forma_pago_id',data:  $select_cat_sat_forma_pago_id);
         }
 
+        $select_cob_caja_id = (new cob_caja_html(html: $this->html_base))->select_cob_caja_id(
+            cols:6,con_registros: true,id_selected:  -1,link:  $this->link);
+
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener select_cob_caja_id',data:  $select_cob_caja_id);
+        }
+
         $this->inputs = new stdClass();
         $this->inputs->select = new stdClass();
         $this->inputs->select->cob_deuda_id = $select_cob_deuda_id;
         $this->inputs->select->bn_cuenta_id = $select_bn_cuenta_id;
         $this->inputs->select->cat_sat_forma_pago_id = $select_cat_sat_forma_pago_id;
+        $this->inputs->select->cob_caja_id = $select_cob_caja_id;
 
 
         return $this->inputs;

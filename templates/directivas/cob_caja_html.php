@@ -107,7 +107,7 @@ class cob_caja_html extends html_controler {
         return $selects;
     }
 
-    public function select_cob_concepto_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
+    public function select_cob_caja_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
     {
         $modelo = new cob_caja(link: $link);
 
