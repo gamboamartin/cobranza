@@ -8,6 +8,7 @@
  */
 namespace gamboamartin\cobranza\controllers;
 
+use gamboamartin\cobranza\html\cob_caja_html;
 use gamboamartin\cobranza\html\cob_cliente_html;
 use gamboamartin\cobranza\html\cob_concepto_html;
 use gamboamartin\cobranza\html\cob_deuda_html;
@@ -20,6 +21,7 @@ use gamboamartin\system\links_menu;
 use gamboamartin\template\html;
 
 use html\bn_cuenta_html;
+use html\cat_sat_forma_pago_html;
 use PDO;
 use stdClass;
 
@@ -159,14 +161,14 @@ class controlador_cob_deuda extends _ctl_base {
         }
 
         $cob_pago_descripcion = (new cob_pago_html(html: $this->html_base))->input_descripcion(
-            cols:12,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Pago');
+            cols:6,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Observaciones');
         if(errores::$error){
             return $this->errores->error(
                 mensaje: 'Error al obtener cob_pago_descripcion',data:  $cob_pago_descripcion);
         }
 
-        $cob_pago_codigo = (new cob_pago_html(html: $this->html_base))->input_descripcion(
-            cols:12,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Cod');
+        $cob_pago_codigo = (new cob_pago_html(html: $this->html_base))->input_codigo(
+            cols:6,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Cod');
         if(errores::$error){
             return $this->errores->error(
                 mensaje: 'Error al obtener cob_pago_codigo',data:  $cob_pago_codigo);
@@ -176,19 +178,37 @@ class controlador_cob_deuda extends _ctl_base {
             cols:12,con_registros: true,id_selected:  -1,link:  $this->link);
         if(errores::$error){
             return $this->errores->error(
-                mensaje: 'Error al obtener cob_pago_codigo',data:  $cob_deuda_id);
+                mensaje: 'Error al obtener cob_deuda_id',data:  $cob_deuda_id);
         }
 
-        $cob_pago_fecha_de_pago = (new cob_pago_html(html: $this->html_base))->input_descripcion(
-            cols:12,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Fecha de pago',);
+        $cob_pago_fecha_de_pago = (new cob_pago_html(html: $this->html_base))->input_fecha(
+            cols:12,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Fecha de pago',
+            value: date('Y-m-d'));
         if(errores::$error){
             return $this->errores->error(
                 mensaje: 'Error al obtener cob_pago_fecha_de_pago',data:  $cob_pago_fecha_de_pago);
         }
 
+        $cob_pago_monto = (new cob_pago_html(html: $this->html_base))->input_monto(
+            cols:12,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Monto');
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener cob_pago_monto',data:  $cob_pago_monto);
+        }
 
+        $cat_sat_forma_pago_id = (new cat_sat_forma_pago_html(html: $this->html_base))->select_cat_sat_forma_pago_id(
+            cols:12,con_registros: true,id_selected:  -1,link:  $this->link);
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener cat_sat_forma_pago_id',data:  $cat_sat_forma_pago_id);
+        }
 
-
+        $cob_caja_id = (new cob_caja_html(html: $this->html_base))->select_cob_caja_id(
+            cols:12,con_registros: true,id_selected:  -1,link:  $this->link);
+        if(errores::$error){
+            return $this->errores->error(
+                mensaje: 'Error al obtener cob_caja_id',data:  $cob_caja_id);
+        }
 
 
 
@@ -197,11 +217,14 @@ class controlador_cob_deuda extends _ctl_base {
         $this->inputs->select->cob_cliente_id = $select_cob_cliente_id;
         $this->inputs->select->bn_cuenta_id = $select_bn_cuenta_id;
         $this->inputs->select->cob_concepto_id = $select_cob_concepto_id;
+        $this->inputs->select->cob_deuda_id = $cob_deuda_id;
+        $this->inputs->select->cob_caja_id = $cob_caja_id;
+        $this->inputs->select->cat_sat_forma_pago_id = $cat_sat_forma_pago_id;
+
         $this->inputs->cob_pago_descripcion = $cob_pago_descripcion;
         $this->inputs->cob_pago_codigo = $cob_pago_codigo;
-        $this->inputs->select->cob_deuda_id = $cob_deuda_id;
         $this->inputs->cob_pago_fecha_de_pago = $cob_pago_fecha_de_pago;
-
+        $this->inputs->cob_pago_monto = $cob_pago_monto;
 
         return $this->inputs;
     }
