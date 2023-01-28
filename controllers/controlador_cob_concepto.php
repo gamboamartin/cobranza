@@ -138,14 +138,14 @@ class controlador_cob_concepto extends _ctl_base {
 
 
         $cob_deuda_monto = (new cob_deuda_html(html: $this->html_base))->input_monto(
-            cols:12,row_upd:  new stdClass(),value_vacio:  false);
+            cols:6,row_upd:  new stdClass(),value_vacio:  false);
         if(errores::$error){
             return $this->errores->error(
                 mensaje: 'Error al obtener cob_deuda_monto',data:  $cob_deuda_monto);
         }
 
         $fecha_vencimiento = (new cob_deuda_html(html: $this->html_base))->input_fecha_vencimiento(
-            cols:12,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Fecha de vencimiento',
+            cols:6,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'Fecha de vencimiento',
             value: date('Y-m-d'));
         if(errores::$error){
             return $this->errores->error(
