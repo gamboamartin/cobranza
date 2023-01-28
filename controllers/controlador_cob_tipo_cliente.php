@@ -146,14 +146,14 @@ class controlador_cob_tipo_cliente extends _ctl_parent_sin_codigo {
         }
 
         $cob_cliente_rfc = (new cob_cliente_html(html: $this->html_base))->input_descripcion(
-            cols:6,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'RFC');
+            cols:12,row_upd:  new stdClass(),value_vacio:  false,place_holder: 'RFC');
         if(errores::$error){
             return $this->errores->error(
                 mensaje: 'Error al obtener cob_cliente_rfc',data:  $cob_cliente_rfc);
         }
 
         $select_cob_tipo_cliente_id = (new cob_tipo_cliente_html(html: $this->html_base))->select_cob_tipo_cliente_id(
-            cols:12,con_registros: true,id_selected:  $registro->cob_tipo_cliente_id,link:  $this->link);
+            cols:12,con_registros: true,id_selected:  $registro->cob_tipo_cliente_id,link:  $this->link, disabled: true);
 
         if(errores::$error){
             return $this->errores->error(
