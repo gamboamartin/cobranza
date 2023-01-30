@@ -107,7 +107,7 @@ class cob_concepto_html extends html_controler {
         return $selects;
     }
 
-    public function select_cob_concepto_id(int $cols, bool $con_registros, int $id_selected, PDO $link, bool $disabled): array|string
+    public function select_cob_concepto_id(int $cols, bool $con_registros, int $id_selected, PDO $link, bool $disabled = false): array|string
     {
         $modelo = new cob_concepto(link: $link);
 
