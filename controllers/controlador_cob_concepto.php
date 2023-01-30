@@ -121,21 +121,12 @@ class controlador_cob_concepto extends _ctl_base {
 
     protected function inputs_children(stdClass $registro): stdClass|array
     {
-        $select_cob_tipo_concepto_id = (new cob_tipo_concepto_html(html: $this->html_base))->select_cob_tipo_concepto_id(
-            cols:6,con_registros: true,id_selected:  -1,link:  $this->link);
-
-        if(errores::$error){
-            return $this->errores->error(
-                mensaje: 'Error al obtener select_cob_tipo_concepto_id',data:  $select_cob_tipo_concepto_id);
-        }
         $select_cob_cliente_id = (new cob_cliente_html(html: $this->html_base))->select_cob_cliente_id(
             cols:12,con_registros: true,id_selected:  -1,link:  $this->link);
-
         if(errores::$error){
             return $this->errores->error(
                 mensaje: 'Error al obtener select_cob_cliente_id',data:  $select_cob_cliente_id);
         }
-
 
         $cob_deuda_monto = (new cob_deuda_html(html: $this->html_base))->input_monto(
             cols:6,row_upd:  new stdClass(),value_vacio:  false);
@@ -153,23 +144,19 @@ class controlador_cob_concepto extends _ctl_base {
         }
 
         $cob_concepto_id = (new cob_concepto_html(html: $this->html_base))->select_cob_concepto_id(
-            cols:12,con_registros: true,id_selected:  -1,link:  $this->link);
+            cols:12,con_registros: true,id_selected: $registro->cob_concepto_id,link:  $this->link, disabled: true);
         if(errores::$error){
             return $this->errores->error(
                 mensaje: 'Error al obtener cob_concepto_id',data:  $cob_concepto_id);
         }
 
 
-
-
         $this->inputs = new stdClass();
         $this->inputs->select = new stdClass();
-        $this->inputs->select->cob_tipo_concepto_id = $select_cob_tipo_concepto_id;
         $this->inputs->cob_cliente_id = $select_cob_cliente_id;
         $this->inputs->cob_deuda_monto = $cob_deuda_monto;
         $this->inputs->fecha_vencimiento = $fecha_vencimiento;
         $this->inputs->cob_concepto_id = $cob_concepto_id;
-
 
 
         return $this->inputs;
