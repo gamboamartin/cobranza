@@ -132,7 +132,7 @@ class controlador_cob_cliente extends _ctl_base {
     protected function inputs_children(stdClass $registro): stdClass|array
     {
         $select_cob_cliente_id = (new cob_cliente_html(html: $this->html_base))->select_cob_cliente_id(
-            cols:12,con_registros: true,id_selected:  $registro->cob_cliente_id,link:  $this->link, disabled: true);
+            cols:12,con_registros: true,id_selected:  $registro->cob_cliente_id,link:  $this->link);
         if(errores::$error){
             return $this->errores->error(
                 mensaje: 'Error al obtener select_cob_cliente_id',data:  $select_cob_cliente_id);

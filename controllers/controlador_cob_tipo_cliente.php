@@ -153,7 +153,7 @@ class controlador_cob_tipo_cliente extends _ctl_parent_sin_codigo {
         }
 
         $select_cob_tipo_cliente_id = (new cob_tipo_cliente_html(html: $this->html_base))->select_cob_tipo_cliente_id(
-            cols:12,con_registros: true,id_selected:  $registro->cob_tipo_cliente_id,link:  $this->link, disabled: true);
+            cols:12,con_registros: true,id_selected:  $registro->cob_tipo_cliente_id,link:  $this->link);
 
         if(errores::$error){
             return $this->errores->error(

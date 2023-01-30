@@ -144,7 +144,7 @@ class controlador_cob_concepto extends _ctl_base {
         }
 
         $cob_concepto_id = (new cob_concepto_html(html: $this->html_base))->select_cob_concepto_id(
-            cols:12,con_registros: true,id_selected: $registro->cob_concepto_id,link:  $this->link, disabled: true);
+            cols:12,con_registros: true,id_selected: $registro->cob_concepto_id,link:  $this->link);
         if(errores::$error){
             return $this->errores->error(
                 mensaje: 'Error al obtener cob_concepto_id',data:  $cob_concepto_id);

@@ -57,7 +57,7 @@ class controlador_cob_tipo_ingreso extends _ctl_parent_sin_codigo {
     protected function inputs_children(stdClass $registro): stdClass|array
     {
         $select_cob_tipo_ingreso_id = (new cob_tipo_ingreso_html(html: $this->html_base))->select_cob_tipo_ingreso_id(
-            cols:12,con_registros: true,id_selected: $this->registro_id,link:  $this->link, disabled: true);
+            cols:12,con_registros: true,id_selected: $this->registro_id,link:  $this->link);
 
         if(errores::$error){
             return $this->errores->error(
