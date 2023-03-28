@@ -1,7 +1,6 @@
 <?php /** @var  \gamboamartin\cobranza\controllers\controlador_adm_session $controlador  controlador en ejecucion */ ?>
 <?php use config\views; ?>
 
-<?php echo $controlador->inputs->codigo; ?>
 <?php echo $controlador->inputs->descripcion; ?>
 <?php echo $controlador->inputs->fecha_de_pago; ?>
 <?php echo $controlador->inputs->monto; ?>
